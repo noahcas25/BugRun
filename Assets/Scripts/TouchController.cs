@@ -9,10 +9,12 @@ public class TouchController : MonoBehaviour
     private Vector2 startPos;
     private Vector2 currentPos;
     private Vector2 endPos;
+    private Vector2 distance;
 
 
     public GameObject player;
-    public float swipeRange;
+    public float swipeRangeX;
+    public float swipeRangeY;
     public float tapRange;
 
     private bool touchStopped = false;
@@ -27,6 +29,8 @@ public class TouchController : MonoBehaviour
         Swipe();
     }
 
+    // Logic for swipe controls
+
     private void Swipe() {
 
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
@@ -35,41 +39,42 @@ public class TouchController : MonoBehaviour
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
             currentPos = Input.GetTouch(0).position;
 
-            Vector2 Distance = currentPos - startPos;
+            distance = currentPos - startPos;
 
             if(!touchStopped) {
 
-                if(Distance.x < -swipeRange) {
+                if(distance.x < -swipeRangeX && distance.y < swipeRangeY) {
                     player.GetComponent<PlayerControllerScript>().Move("Left");
                     touchStopped = true;
                 }
 
-                else if(Distance.x > swipeRange) {
+                else if(distance.x > swipeRangeX && distance.y < swipeRangeY) {
                    player.GetComponent<PlayerControllerScript>().Move("Right");
                     touchStopped = true;
                 }
 
-                else if(Distance.y > swipeRange) {
+                else if(distance.y > swipeRangeY) {
                      player.GetComponent<PlayerControllerScript>().Move("Up");
                     touchStopped = true;
                 }
 
-                else if(Distance.y < -swipeRange) {
-                    Debug.Log("Down");
-                    touchStopped = true;
-                }
+                // Plans later
+
+                // else if(distance.y < -swipeRangeY) {
+                //     // Debug.Log("Down");
+                //     touchStopped = true;
+                // }
             }
         }
-
 
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) {
 
             touchStopped = false;
             endPos = Input.GetTouch(0).position;
 
-            Vector2 Distance = endPos - startPos;
+            distance = endPos - startPos;
 
-            if(Mathf.Abs(Distance.x) < tapRange && Mathf.Abs(Distance.y) < tapRange) {
+            if(Mathf.Abs(distance.x) < tapRange && Mathf.Abs(distance.y) < tapRange) {
                 Debug.Log("Tap");
             }
         }

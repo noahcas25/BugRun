@@ -8,6 +8,7 @@ public class PlayerControllerScript : MonoBehaviour
     public int walkSpeed = 5;
     public int jumpForce = 5;
     public Camera camera;
+    public Canvas gameController;
 
     private Rigidbody rb;
     private bool canJump = true;
@@ -33,23 +34,18 @@ public class PlayerControllerScript : MonoBehaviour
 
     public void Move(string direction) {
 
-
         switch(direction){
 
             case"Left": 
 
-            if(transform.position.x > -29) {
-                transform.position += transform.right * (float)-1.25; 
-            }
-
+                if(transform.position.x > -29)
+                    transform.position += transform.right * (float)-1.25; 
             break;
 
             case "Right": 
 
-            if(transform.position.x < -26) { 
-                transform.position += transform.right * (float)1.25; 
-            }
-                
+                if(transform.position.x < -26)
+                    transform.position += transform.right * (float)1.25; 
             break;
 
             case "Up":
@@ -73,5 +69,25 @@ public class PlayerControllerScript : MonoBehaviour
        canJump = false;
        yield return new WaitForSeconds((float) 1);
        canJump = true;
+    }
+
+    // Trigger if player collides with something
+    private void OnTriggerEnter(Collider other) {
+        if(other.CompareTag("Trap")) {
+            gameController.GetComponent<GameControllerScript>().PlayerDied();
+            
+            
+            Debug.Log("Hit Trap");
+        }
+
+        if(other.CompareTag("Food")) {
+            other.gameObject.SetActive(false);
+            gameController.GetComponent<GameControllerScript>().FoodObtained();
+            Debug.Log("Hit Food");
+        }
+
+        if(other.CompareTag("End")) {
+            gameController.GetComponent<GameControllerScript>().LevelCompleted();
+        }
     }
 }
