@@ -58,12 +58,10 @@ public class TouchController : MonoBehaviour
                     touchStopped = true;
                 }
 
-                // Plans later
-
-                // else if(distance.y < -swipeRangeY) {
-                //     // Debug.Log("Down");
-                //     touchStopped = true;
-                // }
+                else if(distance.y < -swipeRangeY) {
+                   player.GetComponent<PlayerControllerScript>().Move("Down");
+                    touchStopped = true;
+                }
             }
         }
 
@@ -76,6 +74,7 @@ public class TouchController : MonoBehaviour
 
             if(Mathf.Abs(distance.x) < tapRange && Mathf.Abs(distance.y) < tapRange) {
                 Debug.Log("Tap");
+                //  player.GetComponent<PlayerControllerScript>().Move("Up");
             }
         }
     }

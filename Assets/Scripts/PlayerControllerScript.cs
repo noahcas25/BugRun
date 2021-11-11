@@ -12,6 +12,7 @@ public class PlayerControllerScript : MonoBehaviour
 
     private Rigidbody rb;
     private bool canJump = true;
+    private bool canGetHit = true;
 
     // Start is called before the first frame update
     void Start()
@@ -38,19 +39,23 @@ public class PlayerControllerScript : MonoBehaviour
 
             case"Left": 
 
-                if(transform.position.x > -29)
+                if(transform.position.x > -28)
                     transform.position += transform.right * (float)-1.25; 
             break;
 
             case "Right": 
 
-                if(transform.position.x < -26)
+                if(transform.position.x < -27)
                     transform.position += transform.right * (float)1.25; 
             break;
 
             case "Up":
                 Jump();
             break;
+
+            // case "Down":
+            //     transform.position ;
+            // break;
         }
     }
 
@@ -67,17 +72,27 @@ public class PlayerControllerScript : MonoBehaviour
 
     private IEnumerator JumpTimer() {
        canJump = false;
-       yield return new WaitForSeconds((float) 1);
+       yield return new WaitForSeconds((float) .75);
        canJump = true;
+    }
+
+    private IEnumerator HitTimer() {
+       walkSpeed = 3;
+       canGetHit = false;
+       GetComponent<Animator>().enabled = true;
+
+       yield return new WaitForSeconds((float) 2);
+
+       walkSpeed = 5;
+       canGetHit = true;
+       GetComponent<Animator>().enabled = false;
     }
 
     // Trigger if player collides with something
     private void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Trap")) {
-            gameController.GetComponent<GameControllerScript>().PlayerDied();
-            
-            
-            Debug.Log("Hit Trap");
+        if(other.CompareTag("Trap") && canGetHit == true) {
+           StartCoroutine(HitTimer());
+           Debug.Log("Hit Trap");
         }
 
         if(other.CompareTag("Food")) {
@@ -86,8 +101,7 @@ public class PlayerControllerScript : MonoBehaviour
             Debug.Log("Hit Food");
         }
 
-        if(other.CompareTag("End")) {
+        if(other.CompareTag("End"))
             gameController.GetComponent<GameControllerScript>().LevelCompleted();
-        }
     }
 }

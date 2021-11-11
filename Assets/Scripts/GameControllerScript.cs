@@ -12,6 +12,7 @@ public class GameControllerScript : MonoBehaviour
     void Start() {
         scoreText = GameObject.FindWithTag("Score");
         scoreText.GetComponent<Animator>().enabled = false;
+        Application.targetFrameRate = 60;
     }
 
     public void FoodObtained() {
@@ -27,6 +28,7 @@ public class GameControllerScript : MonoBehaviour
     }
 
     public void LevelCompleted() {
+        Time.timeScale = 0f;
         transform.GetChild(2).gameObject.SetActive(true);
     }
 
