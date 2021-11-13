@@ -43,12 +43,12 @@ public class TouchController : MonoBehaviour
 
             if(!touchStopped) {
 
-                if(distance.x < -swipeRangeX && distance.y < swipeRangeY) {
+                if(distance.x < -swipeRangeX && (distance.y < swipeRangeY && distance.y > -swipeRangeY)) {
                     player.GetComponent<PlayerControllerScript>().Move("Left");
                     touchStopped = true;
                 }
 
-                else if(distance.x > swipeRangeX && distance.y < swipeRangeY) {
+                else if(distance.x > swipeRangeX && (distance.y < swipeRangeY && distance.y > -swipeRangeY)) {
                    player.GetComponent<PlayerControllerScript>().Move("Right");
                     touchStopped = true;
                 }

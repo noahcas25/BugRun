@@ -8,6 +8,8 @@ TagManager:
   - Food
   - Score
   - End
+  - Floor
+  - LivesCount
   layers:
   - Default
   - TransparentFX

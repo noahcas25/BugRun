@@ -6,19 +6,34 @@ using UnityEngine.SceneManagement;
 public class GameControllerScript : MonoBehaviour
 {
 
+    public GameObject player;
+
     private int score = 0;
     private GameObject scoreText;
+    private GameObject livesText;
 
     void Start() {
         scoreText = GameObject.FindWithTag("Score");
+        livesText= GameObject.FindWithTag("LivesCount");
+        player = GameObject.FindWithTag("Player");
+
         scoreText.GetComponent<Animator>().enabled = false;
         Application.targetFrameRate = 60;
     }
 
     public void FoodObtained() {
         score++;
+
+        if(score%10==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() < 14) {
+            player.GetComponent<PlayerControllerScript>().IncreaseWalkSpeed();
+        }
+
         StartCoroutine(AnimatorTimer());
         scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = "" + score;
+    }
+
+    public void PlayerHit() {
+        livesText.GetComponent<TMPro.TextMeshProUGUI>().text = player.GetComponent<PlayerControllerScript>().GetLives() + "";
     }
 
     public void PlayerDied() {

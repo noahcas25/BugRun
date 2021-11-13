@@ -11,6 +11,7 @@ public class PlayerControllerScript : MonoBehaviour
     public Canvas gameController;
 
     private Rigidbody rb;
+    private int lives = 3;
     private bool canJump = true;
     private bool canGetHit = true;
 
@@ -30,6 +31,7 @@ public class PlayerControllerScript : MonoBehaviour
 
     private void Walk() {
         transform.position += transform.forward * walkSpeed * Time.deltaTime;
+        // camera.transform.position = transform.position + transform.forward * (float)(-6.75) + transform.up * (float)4;
         camera.transform.position += transform.forward * walkSpeed * Time.deltaTime;
     }
 
@@ -39,23 +41,31 @@ public class PlayerControllerScript : MonoBehaviour
 
             case"Left": 
 
-                if(transform.position.x > -28)
-                    transform.position += transform.right * (float)-1.25; 
+                if(transform.position.x > -28) {
+                    transform.position = Vector3.Lerp(transform.position, (transform.position += transform.right * (float)-1.25), 100*Time.deltaTime);
+                    // transform.position += transform.right * (float)-1.25;
+                    // camera.transform.position += transform.right * (float)-1.25;
+                }
             break;
 
             case "Right": 
 
-                if(transform.position.x < -27)
-                    transform.position += transform.right * (float)1.25; 
+                if(transform.position.x < -27) {
+                     transform.position = Vector3.Lerp(transform.position, (transform.position += transform.right * (float)1.25), 100*Time.deltaTime);
+                    // transform.position += transform.right * (float)1.25;
+                    // camera.transform.position += transform.right * (float)1.25;
+                }
             break;
 
             case "Up":
                 Jump();
             break;
 
-            // case "Down":
-            //     transform.position ;
-            // break;
+            case "Down":
+                if(!canJump) {
+                    rb.AddForce(0, -(jumpForce/2), 0, ForceMode.Impulse);
+                }
+            break;
         }
     }
 
@@ -68,6 +78,30 @@ public class PlayerControllerScript : MonoBehaviour
         }
     }
 
+    private void PlayerHit() {
+
+        if(walkSpeed > 6)
+            walkSpeed--;
+            
+        lives--;
+        gameController.GetComponent<GameControllerScript>().PlayerHit();
+
+        if(lives==0) 
+            gameController.GetComponent<GameControllerScript>().PlayerDied();
+    }
+
+    public int GetLives() {
+        return lives;
+    }
+
+    public int GetWalkSpeed() {
+        return walkSpeed;
+    }
+
+    public void IncreaseWalkSpeed() {
+        walkSpeed++;
+    }
+
     // Timer that limits the time between jumps
 
     private IEnumerator JumpTimer() {
@@ -77,28 +111,26 @@ public class PlayerControllerScript : MonoBehaviour
     }
 
     private IEnumerator HitTimer() {
-       walkSpeed = 3;
        canGetHit = false;
        GetComponent<Animator>().enabled = true;
 
        yield return new WaitForSeconds((float) 2);
 
-       walkSpeed = 5;
        canGetHit = true;
        GetComponent<Animator>().enabled = false;
     }
+    
 
-    // Trigger if player collides with something
+    // Triggers if player collides with something
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Trap") && canGetHit == true) {
            StartCoroutine(HitTimer());
-           Debug.Log("Hit Trap");
+           PlayerHit();
         }
 
         if(other.CompareTag("Food")) {
             other.gameObject.SetActive(false);
             gameController.GetComponent<GameControllerScript>().FoodObtained();
-            Debug.Log("Hit Food");
         }
 
         if(other.CompareTag("End"))
