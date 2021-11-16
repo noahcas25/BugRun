@@ -8,6 +8,9 @@ TagManager:
   - Food
   - Score
   - End
+  - Floor
+  - LivesCount
+  - CurrentMesh
   layers:
   - Default
   - TransparentFX
