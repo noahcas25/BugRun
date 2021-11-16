@@ -65,7 +65,7 @@ public class FoodSpawner : MonoBehaviour
     IEnumerator SpawnTimer() {
 
         spawn = false;
-        yield return new WaitForSeconds((float) .75);
+        yield return new WaitForSeconds((float) 0.75);
         spawn = true;
     }
 

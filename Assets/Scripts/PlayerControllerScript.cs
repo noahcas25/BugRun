@@ -15,16 +15,54 @@ public class PlayerControllerScript : MonoBehaviour
     private bool canJump = true;
     private bool canGetHit = true;
 
+// Used for Lerping player
+    private bool shouldLerp = false;
+    private float movePosition;
+    private float endPos;
+    private float truePosTracker;
+    private float xPos;
+    private Vector3 pos;
+    private Vector3 camPos;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        truePosTracker = transform.position.x;
     }
+
+
+
+// xPos = Mathf.Lerp(xPos, xPos-horizontalMovement, Time.deltaTime * 3);
+
 
     // Update is called once per frame
     void Update()
     {
         Walk();
+
+        if(shouldLerp) {
+            xPos = Mathf.Lerp(xPos, endPos, 20f * Time.deltaTime);
+            pos = transform.position;
+            camPos = camera.transform.position;
+
+            pos.x = xPos;
+            camPos.x = xPos;
+            transform.position  = pos;
+            camera.transform.position = camPos;
+    
+            if(Mathf.Abs(transform.position.x - endPos) < 0.01) {
+                endPos = (float)Mathf.Round(endPos * 100f) / 100f;
+                pos.x = endPos;
+                camPos.x = endPos;
+                transform.position  = pos;
+                camera.transform.position = camPos;
+                shouldLerp = false;
+            };
+        }
+
+        // Walk();
     }
 
     // Moves the player at a constant rate based on the walk speed 
@@ -36,24 +74,33 @@ public class PlayerControllerScript : MonoBehaviour
     }
 
     public void Move(string direction) {
+        //  check 
+        // endPos = transform.position.x;
+        
+        // endPos = transform.position.x;
 
         switch(direction){
 
             case"Left": 
 
-                if(transform.position.x > -28) {
-                    transform.position = Vector3.Lerp(transform.position, (transform.position += transform.right * (float)-1.25), 100*Time.deltaTime);
-                    // transform.position += transform.right * (float)-1.25;
-                    // camera.transform.position += transform.right * (float)-1.25;
+                if(endPos > -28) {
+                    movePosition = (float) -1.25;
+                    xPos = transform.position.x;
+                    endPos = truePosTracker + movePosition;
+                    truePosTracker = endPos;
+                    shouldLerp = true;
                 }
             break;
 
             case "Right": 
 
-                if(transform.position.x < -27) {
-                     transform.position = Vector3.Lerp(transform.position, (transform.position += transform.right * (float)1.25), 100*Time.deltaTime);
-                    // transform.position += transform.right * (float)1.25;
-                    // camera.transform.position += transform.right * (float)1.25;
+                if(endPos < -27) {
+                    movePosition = (float) 1.25;
+                    xPos = transform.position.x;
+                    endPos = truePosTracker + movePosition;
+                    truePosTracker = endPos;
+                    shouldLerp = true;
+                    //  transform.position = Vector3.Lerp(transform.position, (transform.position += transform.right * (float)1.25), 1*Time.deltaTime);
                 }
             break;
 
@@ -63,7 +110,7 @@ public class PlayerControllerScript : MonoBehaviour
 
             case "Down":
                 if(!canJump) {
-                    rb.AddForce(0, -(jumpForce/2), 0, ForceMode.Impulse);
+                    rb.AddForce(0, -jumpForce, 0, ForceMode.Impulse);
                 }
             break;
         }
