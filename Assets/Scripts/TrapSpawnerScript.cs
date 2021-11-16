@@ -47,6 +47,10 @@ public class TrapSpawnerScript : MonoBehaviour
         switch( Random.Range(0,3)) {
             case 0:
                 trapRandom.transform.position = lastPosition + transform.forward * (float)10 + transform.right * (float)-1.25;
+                if(rand != 3 && Random.Range(0,3) > 0) {
+                    GameObject trapRandom2 = Instantiate(traps[rand]);
+                    trapRandom2.transform.position = lastPosition + transform.forward * (float)10;
+                }
             break;
 
             case 1:
@@ -55,6 +59,10 @@ public class TrapSpawnerScript : MonoBehaviour
 
             case 2:
                 trapRandom.transform.position = lastPosition + transform.forward * (float)10 + transform.right * (float)1.25;
+                if(rand != 3 && Random.Range(0,2) > 0) {
+                    GameObject trapRandom2 = Instantiate(traps[rand]);
+                    trapRandom2.transform.position = lastPosition + transform.forward * (float)10;
+                }
             break;
         }
     
@@ -71,7 +79,7 @@ public class TrapSpawnerScript : MonoBehaviour
     IEnumerator SpawnTimer() {
 
         spawn = false;
-        yield return new WaitForSeconds((float) 0.75);
+        yield return new WaitForSeconds((float) 0.5);
         spawn = true;
     }
 
