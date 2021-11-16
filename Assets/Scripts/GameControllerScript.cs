@@ -11,8 +11,8 @@ public class GameControllerScript : MonoBehaviour
     private int score = 0;
     private GameObject scoreText;
     private GameObject livesText;
-    public GameObject speedUpArrow;
-    public GameObject slowDownArrow;
+    // public GameObject speedUpArrow;
+    // public GameObject slowDownArrow;
     public GameObject particleSystem1;
     // public GameObject particleSystem2;
     // public GameObject particleSystem3;
@@ -22,8 +22,8 @@ public class GameControllerScript : MonoBehaviour
         scoreText = GameObject.FindWithTag("Score");
         livesText= GameObject.FindWithTag("LivesCount");
         player = GameObject.FindWithTag("Player");
-        speedUpArrow.GetComponent<Animator>().enabled = false;
-        slowDownArrow.GetComponent<Animator>().enabled = false;
+        // speedUpArrow.GetComponent<Animator>().enabled = false;
+        // slowDownArrow.GetComponent<Animator>().enabled = false;
 
         scoreText.GetComponent<Animator>().enabled = false;
         Application.targetFrameRate = 60;
