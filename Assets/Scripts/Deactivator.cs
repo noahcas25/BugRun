@@ -5,6 +5,16 @@ using UnityEngine;
 public class Deactivator : MonoBehaviour
 {
     public GameObject player;
+
+    [SerializeField]
+    private GameObjectPool trapPool;
+
+     [SerializeField]
+    private GameObjectPool coinPool;
+
+    [SerializeField]
+    private GameObjectPool foodPool;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -12,8 +22,16 @@ public class Deactivator : MonoBehaviour
     }
     
     private void OnTriggerEnter(Collider other) {
-        if(!other.CompareTag("Floor")){
-            other.gameObject.SetActive(false);
+        if(!other.CompareTag("Floor") && !other.CompareTag("Scenery")){
+            if(other.CompareTag("Trap")) 
+                trapPool.ReturnToPool(other.gameObject); 
+            else if(other.CompareTag("Food"))
+                foodPool.ReturnToPool(other.gameObject);
+             else if(other.CompareTag("Coin"))
+                coinPool.ReturnToPool(other.gameObject);
+            else if(other.CompareTag("TrapOverlay")) 
+                trapPool.ReturnToPool(other.gameObject.transform.parent.gameObject);
+            else other.gameObject.SetActive(false);
         }
     }
 }

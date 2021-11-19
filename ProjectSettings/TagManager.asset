@@ -11,6 +11,9 @@ TagManager:
   - Floor
   - LivesCount
   - CurrentMesh
+  - Scenery
+  - TrapOverlay
+  - Coin
   layers:
   - Default
   - TransparentFX

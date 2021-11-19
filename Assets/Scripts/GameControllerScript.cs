@@ -11,35 +11,34 @@ public class GameControllerScript : MonoBehaviour
     private int score = 0;
     private GameObject scoreText;
     private GameObject livesText;
-    // public GameObject speedUpArrow;
-    // public GameObject slowDownArrow;
     public GameObject particleSystem1;
-    // public GameObject particleSystem2;
-    // public GameObject particleSystem3;
-
+    public GameObject sceneSpawner;
+ 
 
     void Start() {
         scoreText = GameObject.FindWithTag("Score");
         livesText= GameObject.FindWithTag("LivesCount");
         player = GameObject.FindWithTag("Player");
-        // speedUpArrow.GetComponent<Animator>().enabled = false;
-        // slowDownArrow.GetComponent<Animator>().enabled = false;
 
         scoreText.GetComponent<Animator>().enabled = false;
         Application.targetFrameRate = 60;
     }
 
-    public void FoodObtained() {
-        score++;
+    public void CollectibleObtained(int value) {
+        score += value;
 
         if(score%8==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() < 15) {
             player.GetComponent<PlayerControllerScript>().IncreaseWalkSpeed();
-            // StartCoroutine(AnimatorTimer(speedUpArrow));
             StartCoroutine(ParticleTimer());
+            StartCoroutine(AnimatorTimer(scoreText));
         }
 
-        StartCoroutine(AnimatorTimer(scoreText));
+        // StartCoroutine(AnimatorTimer(scoreText));
         scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = "" + score;
+    }
+
+    public void SpawnScenery() {
+        sceneSpawner.GetComponent<SceneSpawner>().SpawnScenery();
     }
 
     public void PlayerHit() {
@@ -71,11 +70,13 @@ public class GameControllerScript : MonoBehaviour
 
      private IEnumerator ParticleTimer() {
        particleSystem1.GetComponent<ParticleSystem>().Play();
-    //    particleSystem2.GetComponent<ParticleSystem>().Play();
-    //    particleSystem3.GetComponent<ParticleSystem>().Play();
        yield return new WaitForSeconds((float) 1);
        particleSystem1.GetComponent<ParticleSystem>().Stop();
-    //    particleSystem2.GetComponent<ParticleSystem>().Stop();
-    //    particleSystem3.GetComponent<ParticleSystem>().Stop();
     }
+
+    // private IEnumerator PowerUpTimer() {
+    //    player.GetComponent<PlayerControllerScript>().canGetHit = false;
+    //    yield return new WaitForSeconds((float) 1);
+    //    player.GetComponent<PlayerControllerScript>().canGetHit = true;
+    // }
 }
