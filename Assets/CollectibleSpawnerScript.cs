@@ -5,7 +5,6 @@ using UnityEngine;
 public class CollectibleSpawnerScript : MonoBehaviour
 {
 
-
      [SerializeField]
     private GameObjectPool poolCoins;
 
@@ -15,8 +14,7 @@ public class CollectibleSpawnerScript : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    GameObject newCollectible;
-
+    private GameObject newCollectible;
     // Spawn boolean
     private bool spawn = true;
     private static int counter = 0;
@@ -59,15 +57,15 @@ public class CollectibleSpawnerScript : MonoBehaviour
 
         switch( Random.Range(0,3)) {
             case 0:
-                newCollectible.transform.position = lastPosition + transform.forward * (float)75.5 + transform.right * (float)-1.25;
+                newCollectible.transform.position = lastPosition + transform.forward * (float)85.5 + transform.right * (float)-1.25;
             break;
 
             case 1:
-                newCollectible.transform.position = lastPosition + transform.forward * (float)75.5;
+                newCollectible.transform.position = lastPosition + transform.forward * (float)85.5;
             break;
 
             case 2:
-                newCollectible.transform.position = lastPosition + transform.forward * (float)75.5 + transform.right * (float)1.25;
+                newCollectible.transform.position = lastPosition + transform.forward * (float)85.5 + transform.right * (float)1.25;
             break;
         }
     }

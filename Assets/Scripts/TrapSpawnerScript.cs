@@ -43,7 +43,7 @@ public class TrapSpawnerScript : MonoBehaviour
     // This is how you know its the Saw
         if(trapRandom.transform.childCount > 3) {
             lastPosition.x = (float)-26.71;
-            trapRandom.transform.position = lastPosition + transform.forward * (float)81.5;
+            trapRandom.transform.position = lastPosition + transform.forward * (float)91.5;
             lastPosition.x = (float)-27.5;
         } else {
             GameObject trapRandom2 = pool.Get();
@@ -51,21 +51,21 @@ public class TrapSpawnerScript : MonoBehaviour
 
         switch( Random.Range(0,3)) {
             case 0:
-                trapRandom.transform.position = lastPosition + transform.forward * (float)81.5 + transform.right * (float)-1.25;
+                trapRandom.transform.position = lastPosition + transform.forward * (float)91.5 + transform.right * (float)-1.25;
                 if(Random.Range(0,3) > 0 && trapRandom2.transform.childCount <= 3) 
-                    trapRandom2.transform.position = lastPosition + transform.forward * (float)81.5;
+                    trapRandom2.transform.position = lastPosition + transform.forward * (float)91.5;
                 else pool.ReturnToPool(trapRandom2);
             break;
 
             case 1:
-                trapRandom.transform.position = lastPosition + transform.forward * (float)81.5;
+                trapRandom.transform.position = lastPosition + transform.forward * (float)91.5;
                 pool.ReturnToPool(trapRandom2);
             break;
 
             case 2:
-                trapRandom.transform.position = lastPosition + transform.forward * (float)81.5 + transform.right * (float)1.25;
+                trapRandom.transform.position = lastPosition + transform.forward * (float)91.5 + transform.right * (float)1.25;
                 if(Random.Range(0,3) > 0  && trapRandom2.transform.childCount <= 3)
-                     trapRandom2.transform.position = lastPosition + transform.forward * (float)81.5;
+                     trapRandom2.transform.position = lastPosition + transform.forward * (float)91.5;
                 else pool.ReturnToPool(trapRandom2);
             break;
         }}

@@ -7,22 +7,25 @@ public class PlayerControllerScript : MonoBehaviour
 
     [SerializeField] 
     private GameObjectPool coinPool;
-
     [SerializeField] 
     private GameObjectPool foodPool;
+    [SerializeField] 
+    private int jumpForce = 5;
+    [SerializeField] 
+    private Camera camera;
+    [SerializeField] 
+    private Canvas gameController;
 
-    public int walkSpeed = 5;
-    public int jumpForce = 5;
-    public Camera camera;
-    public Canvas gameController;
-
+    public int walkSpeed = 8;
     private Rigidbody rb;
     private GameObject playerMesh;
+
     private int lives = 3;
+    private bool canWalk = true;
     private bool canJump = true;
     private bool canGetHit = true;
 
-// Used for Lerping player
+    // Used for Lerping player
     private bool shouldLerp = false;
     private float movePosition;
     private float endPos;
@@ -42,9 +45,21 @@ public class PlayerControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Walk();
+        if(canWalk)
+            Walk();
+        if(shouldLerp) 
+            LerpPlayer();
+    }
 
-        if(shouldLerp) {
+    // Moves the player at a constant rate based on the walk speed 
+    private void Walk() {
+            transform.position += transform.forward * walkSpeed * Time.deltaTime;
+            camera.transform.position = transform.forward * walkSpeed * Time.deltaTime;
+            // camera.transform.position = transform.position + transform.forward * (float)(-8) + transform.up * (float)5;
+    }
+
+    // Function used to move players position over time
+    private void LerpPlayer() {
             xPos = Mathf.Lerp(xPos, endPos, 20f * Time.deltaTime);
             pos = transform.position;
             camPos = camera.transform.position;
@@ -62,24 +77,13 @@ public class PlayerControllerScript : MonoBehaviour
                 camera.transform.position = camPos;
                 shouldLerp = false;
             };
-        }
-
-        // Walk();
     }
 
-    // Moves the player at a constant rate based on the walk speed 
-
-    private void Walk() {
-        transform.position += transform.forward * walkSpeed * Time.deltaTime;
-        // camera.transform.position = transform.position + transform.forward * (float)(-6.75) + transform.up * (float)4;
-        camera.transform.position += transform.forward * walkSpeed * Time.deltaTime;
-    }
-
+    // Function used to position the player and camera during gameplay
     public void Move(string direction) {
         switch(direction){
 
             case"Left": 
-
                 if(endPos > -28) {
                     movePosition = (float) -1.25;
                     xPos = transform.position.x;
@@ -90,14 +94,12 @@ public class PlayerControllerScript : MonoBehaviour
             break;
 
             case "Right": 
-
                 if(endPos < -27) {
                     movePosition = (float) 1.25;
                     xPos = transform.position.x;
                     endPos = truePosTracker + movePosition;
                     truePosTracker = endPos;
                     shouldLerp = true;
-                    //  transform.position = Vector3.Lerp(transform.position, (transform.position += transform.right * (float)1.25), 1*Time.deltaTime);
                 }
             break;
 
@@ -106,15 +108,13 @@ public class PlayerControllerScript : MonoBehaviour
             break;
 
             case "Down":
-                if(!canJump) {
+                if(!canJump)
                     rb.AddForce(0, -jumpForce, 0, ForceMode.Impulse);
-                }
             break;
         }
     }
 
-    // Adds a force to the Player RB to jump 
-
+    // Adds a force to the Players RB to jump 
     public void Jump() {
         if(canJump){
             rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
@@ -122,18 +122,20 @@ public class PlayerControllerScript : MonoBehaviour
         }
     }
 
+    // Function for player damage
     private void PlayerHit() {
-
-        if(walkSpeed > 6)
-            walkSpeed--;
-            
         lives--;
         gameController.GetComponent<GameControllerScript>().PlayerHit();
 
-        if(lives==0) 
+        if(lives==0) {
             gameController.GetComponent<GameControllerScript>().PlayerDied();
+            canGetHit = false;
+        }
+        else if (walkSpeed > 8)
+            walkSpeed--;
     }
 
+    // Getters and Setters
     public int GetLives() {
         return lives;
     }
@@ -146,14 +148,15 @@ public class PlayerControllerScript : MonoBehaviour
         walkSpeed++;
     }
 
-    // Timer that limits the time between jumps
+    public void setCanWalk(bool value) {
+        canWalk = value;
+    }
 
+    // Timers
     private IEnumerator JumpTimer() {
        canJump = false;
-    //    GetComponent<Animator>().enabled = false;
        yield return new WaitForSeconds((float) .75);
        canJump = true;
-    //    GetComponent<Animator>().enabled = true;
     }
 
     private IEnumerator HitTimer() {
@@ -166,7 +169,7 @@ public class PlayerControllerScript : MonoBehaviour
     
     // Triggers if player collides with something
     private void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Trap") && canGetHit == true) {
+        if((other.CompareTag("Trap") || other.CompareTag("TrapOverlay")) && canGetHit == true) {
            StartCoroutine(HitTimer());
            PlayerHit();
         }
@@ -178,9 +181,9 @@ public class PlayerControllerScript : MonoBehaviour
             coinPool.ReturnToPool(other.gameObject);
             gameController.GetComponent<GameControllerScript>().CollectibleObtained(1);
         }
-        else if(other.CompareTag("Scenery")) {
+        else if(other.CompareTag("SceneryTrigger")) {
             gameController.GetComponent<GameControllerScript>().SpawnScenery();
-            // other.enabled = false;
+            other.enabled = false;
         }
     }
 }

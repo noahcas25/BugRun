@@ -1,28 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameControllerScript : MonoBehaviour
 {
-
-    public GameObject player;
-
-    private int score = 0;
+    [SerializeField]
+    private GameObject player;
+    [SerializeField]
+    private GameObject camera;
+    [SerializeField]
     private GameObject scoreText;
+    [SerializeField]
     private GameObject livesText;
-    public GameObject particleSystem1;
-    public GameObject sceneSpawner;
+    [SerializeField]
+    private GameObject particleSystem1;
+    [SerializeField]
+    private GameObject sceneSpawner;
+
+    private int bugIndex = 0;
+    private int score = 0;
+    private int lifeTimeScore;
  
 
     void Start() {
-        scoreText = GameObject.FindWithTag("Score");
-        livesText= GameObject.FindWithTag("LivesCount");
-        player = GameObject.FindWithTag("Player");
-
-        scoreText.GetComponent<Animator>().enabled = false;
         Application.targetFrameRate = 60;
     }
+
+    void OnEnable() {
+        if(PlayerPrefs.HasKey("bugIndex")) {
+            player.transform.GetChild(bugIndex).gameObject.SetActive(false);
+            bugIndex = PlayerPrefs.GetInt("bugIndex");
+            player.transform.GetChild(bugIndex).gameObject.SetActive(true);
+        }
+
+        if(PlayerPrefs.HasKey("lifeTimeScore")) {
+            lifeTimeScore = PlayerPrefs.GetInt("lifeTimeScore");
+    }
+}
+    // void OnDisable() {
+        
+    // }
 
     public void CollectibleObtained(int value) {
         score += value;
@@ -30,11 +49,10 @@ public class GameControllerScript : MonoBehaviour
         if(score%8==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() < 15) {
             player.GetComponent<PlayerControllerScript>().IncreaseWalkSpeed();
             StartCoroutine(ParticleTimer());
-            StartCoroutine(AnimatorTimer(scoreText));
+            // StartCoroutine(AnimatorTimer(scoreText));
         }
 
-        // StartCoroutine(AnimatorTimer(scoreText));
-        scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = "" + score;
+        scoreText.GetComponent<Text>().text = "" + score;
     }
 
     public void SpawnScenery() {
@@ -42,31 +60,38 @@ public class GameControllerScript : MonoBehaviour
     }
 
     public void PlayerHit() {
-        livesText.GetComponent<TMPro.TextMeshProUGUI>().text = player.GetComponent<PlayerControllerScript>().GetLives() + "";
-        // StartCoroutine(AnimatorTimer(slowDownArrow));
+        livesText.GetComponent<Text>().text = player.GetComponent<PlayerControllerScript>().GetLives() + "";
     }
 
     public void PlayerDied() {
-         Time.timeScale = 0f;
-         transform.GetChild(0).gameObject.SetActive(false);
-         transform.GetChild(1).gameObject.SetActive(true);
+         StartCoroutine(DieTimer());
     }
 
-    public void LevelCompleted() {
-        Time.timeScale = 0f;
-        transform.GetChild(2).gameObject.SetActive(true);
-    }
+    // public void LevelCompleted() {
+    //     Time.timeScale = 0f;
+    //     transform.GetChild(2).gameObject.SetActive(true);
+    // }
 
     public void Restart() {
         Time.timeScale = 1f;
         SceneManager.LoadScene("BugRun");
     }
-    
-    private IEnumerator AnimatorTimer(GameObject animator) {
-       animator.GetComponent<Animator>().enabled = true;
-       yield return new WaitForSeconds((float) 1.5);
-       animator.GetComponent<Animator>().enabled = false;
+
+    public void Pause() {
+        Time.timeScale = 0f;
+        transform.GetChild(2).gameObject.SetActive(true);
     }
+
+    public void Resume() {
+        Time.timeScale = 1f;
+        transform.GetChild(2).gameObject.SetActive(false);
+    }
+    
+    // private IEnumerator AnimatorTimer(GameObject animator) {
+    //    animator.GetComponent<Animator>().enabled = true;
+    //    yield return new WaitForSeconds((float) 1.5);
+    //    animator.GetComponent<Animator>().enabled = false;
+    // }
 
      private IEnumerator ParticleTimer() {
        particleSystem1.GetComponent<ParticleSystem>().Play();
@@ -74,9 +99,18 @@ public class GameControllerScript : MonoBehaviour
        particleSystem1.GetComponent<ParticleSystem>().Stop();
     }
 
-    // private IEnumerator PowerUpTimer() {
-    //    player.GetComponent<PlayerControllerScript>().canGetHit = false;
-    //    yield return new WaitForSeconds((float) 1);
-    //    player.GetComponent<PlayerControllerScript>().canGetHit = true;
-    // }
+    private IEnumerator DieTimer() {
+        player.GetComponent<PlayerControllerScript>().setCanWalk(false);
+        transform.GetChild(0).gameObject.SetActive(false);
+        player.GetComponent<Animator>().Play("GameOver");
+        camera.GetComponent<Animator>().enabled = true;
+        yield return new WaitForSeconds((float)2.25);
+        transform.GetChild(1).gameObject.SetActive(true);
+         Time.timeScale = 0f;
+        
+    }
+
+    public void ChangeScene(string scene) {
+        SceneManager.LoadScene(scene);
+    }
 }

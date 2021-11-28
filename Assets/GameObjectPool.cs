@@ -27,7 +27,6 @@ public class GameObjectPool : MonoBehaviour
             AddToPool(1);
         }
         
-        Debug.Log("Size" + pool.Count);
         return pool.Dequeue();
     }
 
@@ -57,8 +56,4 @@ public class GameObjectPool : MonoBehaviour
             }
         }  
     }
-
-
-
-
 }

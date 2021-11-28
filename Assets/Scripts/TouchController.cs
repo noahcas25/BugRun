@@ -43,25 +43,47 @@ public class TouchController : MonoBehaviour
 
             if(!touchStopped) {
 
-                if(distance.x < -swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
-                    player.GetComponent<PlayerControllerScript>().Move("Left");
-                    touchStopped = true;
+                if(Mathf.Abs((float)distance.x) > Mathf.Abs((float)distance.y)) {
+                    if(distance.x > swipeRangeX) {
+                        player.GetComponent<PlayerControllerScript>().Move("Right");
+                        touchStopped = true;
+                    }  
+                    else if(distance.x < -swipeRangeX) {
+                         player.GetComponent<PlayerControllerScript>().Move("Left");
+                         touchStopped = true;
+                    }
+                }
+                else if(Mathf.Abs((float)distance.y) > Mathf.Abs((float)distance.x)) {
+                    if(distance.y > swipeRangeY) {
+                        player.GetComponent<PlayerControllerScript>().Move("Up");
+                        touchStopped = true;
+                    }
+                    else if(distance.y < -swipeRangeY) {
+                        player.GetComponent<PlayerControllerScript>().Move("Down");
+                        touchStopped = true;
+                    }
                 }
 
-                else if(distance.x > swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
-                   player.GetComponent<PlayerControllerScript>().Move("Right");
-                    touchStopped = true;
-                }
 
-                else if(distance.y > swipeRangeY) {
-                     player.GetComponent<PlayerControllerScript>().Move("Up");
-                    touchStopped = true;
-                }
+                // if(distance.x < -swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
+                //     player.GetComponent<PlayerControllerScript>().Move("Left");
+                //     touchStopped = true;
+                // }
 
-                else if(distance.y < -swipeRangeY) {
-                   player.GetComponent<PlayerControllerScript>().Move("Down");
-                    touchStopped = true;
-                }
+                // else if(distance.x > swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
+                //    player.GetComponent<PlayerControllerScript>().Move("Right");
+                //     touchStopped = true;
+                // }
+
+                // else if(distance.y > swipeRangeY) {
+                //      player.GetComponent<PlayerControllerScript>().Move("Up");
+                //     touchStopped = true;
+                // }
+
+                // else if(distance.y < -swipeRangeY) {
+                //    player.GetComponent<PlayerControllerScript>().Move("Down");
+                //     touchStopped = true;
+                // }
             }
         }
 
