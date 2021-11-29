@@ -111,6 +111,7 @@ public class GameControllerScript : MonoBehaviour
     }
 
     public void ChangeScene(string scene) {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(scene);
     }
 }

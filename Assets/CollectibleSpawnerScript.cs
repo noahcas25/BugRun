@@ -15,11 +15,8 @@ public class CollectibleSpawnerScript : MonoBehaviour
     private GameObject player;
 
     private GameObject newCollectible;
-    // Spawn boolean
     private bool spawn = true;
     private static int counter = 0;
-
-    // private Vector3 start;
     private Vector3 lastPosition;
 
     // Start is called before the first frame update
@@ -55,7 +52,7 @@ public class CollectibleSpawnerScript : MonoBehaviour
 
        newCollectible.SetActive(true);
 
-        switch( Random.Range(0,3)) {
+        switch(Random.Range(0,3)) {
             case 0:
                 newCollectible.transform.position = lastPosition + transform.forward * (float)85.5 + transform.right * (float)-1.25;
             break;
