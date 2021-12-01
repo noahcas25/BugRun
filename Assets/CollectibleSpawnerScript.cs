@@ -14,7 +14,7 @@ public class CollectibleSpawnerScript : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    private GameObject newCollectible;
+    // private GameObject newCollectible;
     private bool spawn = true;
     private static int counter = 0;
     private Vector3 lastPosition;
@@ -25,7 +25,7 @@ public class CollectibleSpawnerScript : MonoBehaviour
             lastPosition.x = (float) -27.5;
             lastPosition.y = (float) 0.45;
 
-            poolCoins.AddToPool(15);
+            // poolCoins.AddToPool(10);
             poolFood.AddToPool(10);
 
     }
@@ -42,6 +42,7 @@ public class CollectibleSpawnerScript : MonoBehaviour
         StartCoroutine(SpawnTimer());
         
         lastPosition.z = player.transform.position.z;
+        GameObject newCollectible;
 
         if(counter%25==0) {
            newCollectible = poolFood.Get();
@@ -70,7 +71,7 @@ public class CollectibleSpawnerScript : MonoBehaviour
     IEnumerator SpawnTimer() {
 
         spawn = false;
-        yield return new WaitForSeconds((float) 11/player.GetComponent<PlayerControllerScript>().walkSpeed);
+        yield return new WaitForSeconds((float) 11/player.GetComponent<PlayerControllerScript>().GetWalkSpeed());
         spawn = true;
     }
 }

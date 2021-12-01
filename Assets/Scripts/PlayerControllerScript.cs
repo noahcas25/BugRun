@@ -16,10 +16,10 @@ public class PlayerControllerScript : MonoBehaviour
     [SerializeField] 
     private Canvas gameController;
 
-    public int walkSpeed = 8;
+    // Player Data
     private Rigidbody rb;
     private GameObject playerMesh;
-
+    private int walkSpeed = 8;
     private int lives = 3;
     private bool canWalk = true;
     private bool canJump = true;
@@ -54,8 +54,8 @@ public class PlayerControllerScript : MonoBehaviour
     // Moves the player at a constant rate based on the walk speed 
     private void Walk() {
             transform.position += transform.forward * walkSpeed * Time.deltaTime;
-            camera.transform.position += transform.forward * walkSpeed * Time.deltaTime;
-            // camera.transform.position = transform.position + transform.forward * (float)(-8) + transform.up * (float)5;
+            // camera.transform.position += transform.forward * walkSpeed * Time.deltaTime;
+            camera.transform.position = transform.position + transform.forward * (float)(-8) + transform.up * (float)5;
     }
 
     // Function used to move players position over time

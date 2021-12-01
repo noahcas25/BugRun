@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CollectibleScript : MonoBehaviour
 {
-
-    public bool isFood;
+    [SerializeField]
+    private bool isFood;
+    
     private float rotationY = 0;
     private float rotationZ = 0;
 

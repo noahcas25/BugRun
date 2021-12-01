@@ -11,10 +11,7 @@ public class TrapSpawnerScript : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    [SerializeField]
     private Vector3 lastPosition;
-
-    [SerializeField]
     private bool spawn = true;
 
     // Start is called before the first frame update
@@ -74,7 +71,7 @@ public class TrapSpawnerScript : MonoBehaviour
     IEnumerator SpawnTimer() {
 
         spawn = false;
-        yield return new WaitForSeconds((float) 11/player.GetComponent<PlayerControllerScript>().walkSpeed);
+        yield return new WaitForSeconds((float) 11/player.GetComponent<PlayerControllerScript>().GetWalkSpeed());
         spawn = true;
     }
 }

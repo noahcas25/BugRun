@@ -33,10 +33,10 @@ public class TouchController : MonoBehaviour
 
     private void Swipe() {
 
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
+        if(Input.touchCount >= 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
             startPos = Input.GetTouch(0).position;
 
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
+        if(Input.touchCount >= 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
             currentPos = Input.GetTouch(0).position;
 
             distance = currentPos - startPos;
@@ -63,27 +63,6 @@ public class TouchController : MonoBehaviour
                         touchStopped = true;
                     }
                 }
-
-
-                // if(distance.x < -swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
-                //     player.GetComponent<PlayerControllerScript>().Move("Left");
-                //     touchStopped = true;
-                // }
-
-                // else if(distance.x > swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
-                //    player.GetComponent<PlayerControllerScript>().Move("Right");
-                //     touchStopped = true;
-                // }
-
-                // else if(distance.y > swipeRangeY) {
-                //      player.GetComponent<PlayerControllerScript>().Move("Up");
-                //     touchStopped = true;
-                // }
-
-                // else if(distance.y < -swipeRangeY) {
-                //    player.GetComponent<PlayerControllerScript>().Move("Down");
-                //     touchStopped = true;
-                // }
             }
         }
 

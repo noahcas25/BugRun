@@ -9,29 +9,33 @@ public class ShopControllerScript : MonoBehaviour
     [SerializeField]
     private GameObject content;
 
-    private int bugIndex;
+    [SerializeField]
+    private AudioSource audioSource;
+
+    private int bugIndex = 0;
+    private int newIndex = 0;
     private float[] bugPositions;
+    private float volume;
 
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = 60;
-
-    // Initializing positions to move the camera to for each bug.
-
-        // int numBugs = content.GetChild().childCount;
-        // bugPositions = new float[numBugs];
-
-        // for(int i; i < numBugs; i++) {
-        //     bugPositions[i] = -437.9 + i(81.3);
-        // }
-
         setBugPositions();
     }
 
     void OnEnable() {
         if(PlayerPrefs.HasKey("bugIndex"))
-            bugIndex = PlayerPrefs.GetInt("bugIndex");
+            newIndex = PlayerPrefs.GetInt("bugIndex");
+
+        if(PlayerPrefs.HasKey("Volume")) {
+            volume = PlayerPrefs.GetFloat("Volume");
+            audioSource = GetComponent<AudioSource>();  
+            audioSource.volume = volume;
+        }
+
+        setBugPositions();
+        PlayerSelect(newIndex);
     }
 
     void OnDisable() {
@@ -51,9 +55,11 @@ public class ShopControllerScript : MonoBehaviour
 
 // Based on the bugPositions index -> Move the scroll views content to center screen.
     public void PlayerSelect(int index) {
+         content.transform.GetChild(2).GetChild(bugIndex).gameObject.SetActive(false);
+
          bugIndex = index;
-          Debug.Log(bugIndex);
-         content.GetComponent<RectTransform>().anchoredPosition = new Vector3(bugPositions[index], 0, 0);
+         content.GetComponent<RectTransform>().anchoredPosition = new Vector3(bugPositions[bugIndex], 0, 0);
+         content.transform.GetChild(2).GetChild(bugIndex).gameObject.SetActive(true);
     }
 
      public void ChangeScene(string scene) {
