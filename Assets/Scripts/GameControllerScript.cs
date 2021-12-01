@@ -35,6 +35,8 @@ public class GameControllerScript : MonoBehaviour
     private AudioClip gameOver;
     [SerializeField]
     private AudioClip coinCollect;
+    [SerializeField]
+    private AudioClip playerHit;
 
 
     private AudioSource audioSource;
@@ -85,7 +87,6 @@ public class GameControllerScript : MonoBehaviour
         if(score%8==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() < 15) {
             player.GetComponent<PlayerControllerScript>().IncreaseWalkSpeed();
             StartCoroutine(ParticleTimer());
-            // StartCoroutine(AnimatorTimer(scoreText));
         }
 
         if(score%100==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() <= 20) {
@@ -102,6 +103,7 @@ public class GameControllerScript : MonoBehaviour
 
     public void PlayerHit() {
         livesText.GetComponent<Text>().text = player.GetComponent<PlayerControllerScript>().GetLives() + "";
+        audioSource.PlayOneShot(playerHit);
     }
 
     public void PlayerDied() {

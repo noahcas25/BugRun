@@ -18,25 +18,28 @@ public class TouchController : MonoBehaviour
     public float tapRange;
 
     private bool touchStopped = false;
+    private bool canSwipe = false;
 
     void Start() {
         player = GameObject.FindWithTag("Player");
+        StartCoroutine(TouchTimer());
     }
 
     // Update is called once per frame
     void Update()
-    {
-        Swipe();
+    {   
+        if(canSwipe)
+            Swipe();
     }
 
     // Logic for swipe controls
 
     private void Swipe() {
 
-        if(Input.touchCount >= 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
             startPos = Input.GetTouch(0).position;
 
-        if(Input.touchCount >= 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
             currentPos = Input.GetTouch(0).position;
 
             distance = currentPos - startPos;
@@ -75,13 +78,12 @@ public class TouchController : MonoBehaviour
 
             if(Mathf.Abs(distance.x) < tapRange && Mathf.Abs(distance.y) < tapRange) {
                 Debug.Log("Tap");
-                //  player.GetComponent<PlayerControllerScript>().Move("Up");
             }
         }
     }
-
-
-
-
-
+    
+    private IEnumerator TouchTimer() {
+        yield return new WaitForSeconds(0.1f);
+        canSwipe = true;
+    }
 }

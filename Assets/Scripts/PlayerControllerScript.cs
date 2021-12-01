@@ -54,7 +54,6 @@ public class PlayerControllerScript : MonoBehaviour
     // Moves the player at a constant rate based on the walk speed 
     private void Walk() {
             transform.position += transform.forward * walkSpeed * Time.deltaTime;
-            // camera.transform.position += transform.forward * walkSpeed * Time.deltaTime;
             camera.transform.position = transform.position + transform.forward * (float)(-8) + transform.up * (float)5;
     }
 
