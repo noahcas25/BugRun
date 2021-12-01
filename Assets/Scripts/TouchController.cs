@@ -18,15 +18,18 @@ public class TouchController : MonoBehaviour
     public float tapRange;
 
     private bool touchStopped = false;
+    private bool canSwipe = false;
 
     void Start() {
         player = GameObject.FindWithTag("Player");
+        StartCoroutine(TouchTimer());
     }
 
     // Update is called once per frame
     void Update()
-    {
-        Swipe();
+    {   
+        if(canSwipe)
+            Swipe();
     }
 
     // Logic for swipe controls
@@ -43,24 +46,25 @@ public class TouchController : MonoBehaviour
 
             if(!touchStopped) {
 
-                if(distance.x < -swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
-                    player.GetComponent<PlayerControllerScript>().Move("Left");
-                    touchStopped = true;
+                if(Mathf.Abs((float)distance.x) > Mathf.Abs((float)distance.y)) {
+                    if(distance.x > swipeRangeX) {
+                        player.GetComponent<PlayerControllerScript>().Move("Right");
+                        touchStopped = true;
+                    }  
+                    else if(distance.x < -swipeRangeX) {
+                         player.GetComponent<PlayerControllerScript>().Move("Left");
+                         touchStopped = true;
+                    }
                 }
-
-                else if(distance.x > swipeRangeX && (distance.y < swipeRangeY*2 && distance.y > -swipeRangeY*2)) {
-                   player.GetComponent<PlayerControllerScript>().Move("Right");
-                    touchStopped = true;
-                }
-
-                else if(distance.y > swipeRangeY) {
-                     player.GetComponent<PlayerControllerScript>().Move("Up");
-                    touchStopped = true;
-                }
-
-                else if(distance.y < -swipeRangeY) {
-                   player.GetComponent<PlayerControllerScript>().Move("Down");
-                    touchStopped = true;
+                else if(Mathf.Abs((float)distance.y) > Mathf.Abs((float)distance.x)) {
+                    if(distance.y > swipeRangeY) {
+                        player.GetComponent<PlayerControllerScript>().Move("Up");
+                        touchStopped = true;
+                    }
+                    else if(distance.y < -swipeRangeY) {
+                        player.GetComponent<PlayerControllerScript>().Move("Down");
+                        touchStopped = true;
+                    }
                 }
             }
         }
@@ -74,13 +78,12 @@ public class TouchController : MonoBehaviour
 
             if(Mathf.Abs(distance.x) < tapRange && Mathf.Abs(distance.y) < tapRange) {
                 Debug.Log("Tap");
-                //  player.GetComponent<PlayerControllerScript>().Move("Up");
             }
         }
     }
-
-
-
-
-
+    
+    private IEnumerator TouchTimer() {
+        yield return new WaitForSeconds(0.1f);
+        canSwipe = true;
+    }
 }

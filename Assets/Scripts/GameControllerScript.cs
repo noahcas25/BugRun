@@ -1,81 +1,152 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameControllerScript : MonoBehaviour
 {
+    // Game Components
+    [SerializeField]
+    private GameObject player;
+    [SerializeField]
+    private GameObject camera;
 
-    public GameObject player;
+    [SerializeField]
+    private GameObject sceneSpawner;
+    [SerializeField]
+    private GameObject particleSystem1;
+    
 
-    private int score = 0;
+    // Ui elements
+    [SerializeField]
     private GameObject scoreText;
+    [SerializeField]
     private GameObject livesText;
-    // public GameObject speedUpArrow;
-    // public GameObject slowDownArrow;
-    public GameObject particleSystem1;
-    // public GameObject particleSystem2;
-    // public GameObject particleSystem3;
+    [SerializeField]
+    private GameObject restartCanvasScore;
+    [SerializeField]
+    private GameObject restartCanvasHS;
+    [SerializeField]
+    private GameObject volumeSlider;
 
+    // AudioTracks
+    [SerializeField]
+    private AudioClip gameOver;
+    [SerializeField]
+    private AudioClip coinCollect;
+    [SerializeField]
+    private AudioClip playerHit;
+
+
+    private AudioSource audioSource;
+    private float volume = 1;
+    private int bugIndex = 0;
+    private int score = 0;
+    private int highScore;
+ 
 
     void Start() {
-        scoreText = GameObject.FindWithTag("Score");
-        livesText= GameObject.FindWithTag("LivesCount");
-        player = GameObject.FindWithTag("Player");
-        // speedUpArrow.GetComponent<Animator>().enabled = false;
-        // slowDownArrow.GetComponent<Animator>().enabled = false;
-
-        scoreText.GetComponent<Animator>().enabled = false;
         Application.targetFrameRate = 60;
+        audioSource = GetComponent<AudioSource>();
     }
 
-    public void FoodObtained() {
-        score++;
+    void OnEnable() {
+        if(PlayerPrefs.HasKey("bugIndex")) {
+            player.transform.GetChild(bugIndex).gameObject.SetActive(false);
+            bugIndex = PlayerPrefs.GetInt("bugIndex");
+            player.transform.GetChild(bugIndex).gameObject.SetActive(true);
+        }
+
+        if(PlayerPrefs.HasKey("HighScore")) 
+            highScore = PlayerPrefs.GetInt("HighScore");
+
+        
+        if(PlayerPrefs.HasKey("Volume")) {
+            volume = PlayerPrefs.GetFloat("Volume"); 
+            audioSource = GetComponent<AudioSource>();  
+            audioSource.volume = volume;
+            volumeSlider.GetComponent<Slider>().value = volume; 
+        }
+}
+    void OnDisable() {
+            PlayerPrefs.SetInt("HighScore", highScore);
+            PlayerPrefs.SetFloat("Volume", volume);
+            PlayerPrefs.Save();
+    }
+
+    public void UpdateVolume() {
+        volume = volumeSlider.GetComponent<Slider>().value;
+        audioSource.volume = volume;
+    }
+
+    public void CollectibleObtained(int value) {
+        score += value;
+        audioSource.PlayOneShot(coinCollect);
 
         if(score%8==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() < 15) {
             player.GetComponent<PlayerControllerScript>().IncreaseWalkSpeed();
-            // StartCoroutine(AnimatorTimer(speedUpArrow));
             StartCoroutine(ParticleTimer());
         }
 
-        StartCoroutine(AnimatorTimer(scoreText));
-        scoreText.GetComponent<TMPro.TextMeshProUGUI>().text = "" + score;
+        if(score%100==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() <= 20) {
+            player.GetComponent<PlayerControllerScript>().IncreaseWalkSpeed();
+            StartCoroutine(ParticleTimer());
+        }
+
+        scoreText.GetComponent<Text>().text = "" + score;
+    }
+
+    public void SpawnScenery() {
+        sceneSpawner.GetComponent<SceneSpawner>().SpawnScenery();
     }
 
     public void PlayerHit() {
-        livesText.GetComponent<TMPro.TextMeshProUGUI>().text = player.GetComponent<PlayerControllerScript>().GetLives() + "";
-        // StartCoroutine(AnimatorTimer(slowDownArrow));
+        livesText.GetComponent<Text>().text = player.GetComponent<PlayerControllerScript>().GetLives() + "";
+        audioSource.PlayOneShot(playerHit);
     }
 
     public void PlayerDied() {
-         Time.timeScale = 0f;
-         transform.GetChild(0).gameObject.SetActive(false);
-         transform.GetChild(1).gameObject.SetActive(true);
+         audioSource.PlayOneShot(gameOver);
+         player.GetComponent<PlayerControllerScript>().setCanWalk(false);
+         player.GetComponent<Animator>().Play("GameOver");
+         camera.GetComponent<Animator>().enabled = true;
+
+         StartCoroutine(DieTimer());
     }
 
-    public void LevelCompleted() {
+    public void Pause() {
         Time.timeScale = 0f;
+        transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(2).gameObject.SetActive(true);
     }
 
-    public void Restart() {
+    public void Resume() {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("BugRun");
-    }
-    
-    private IEnumerator AnimatorTimer(GameObject animator) {
-       animator.GetComponent<Animator>().enabled = true;
-       yield return new WaitForSeconds((float) 1.5);
-       animator.GetComponent<Animator>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(2).gameObject.SetActive(false);
     }
 
      private IEnumerator ParticleTimer() {
        particleSystem1.GetComponent<ParticleSystem>().Play();
-    //    particleSystem2.GetComponent<ParticleSystem>().Play();
-    //    particleSystem3.GetComponent<ParticleSystem>().Play();
        yield return new WaitForSeconds((float) 1);
        particleSystem1.GetComponent<ParticleSystem>().Stop();
-    //    particleSystem2.GetComponent<ParticleSystem>().Stop();
-    //    particleSystem3.GetComponent<ParticleSystem>().Stop();
+    }
+
+    private IEnumerator DieTimer() {
+        transform.GetChild(0).gameObject.SetActive(false);
+        yield return new WaitForSeconds((float)2.25);
+        transform.GetChild(1).gameObject.SetActive(true);
+
+        if(score > highScore)
+            highScore = score;
+        restartCanvasScore.GetComponent<Text>().text = scoreText.GetComponent<Text>().text;
+        restartCanvasHS.GetComponent<Text>().text = "" + highScore;
+        Time.timeScale = 0f;
+    }
+
+    public void ChangeScene(string scene) {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(scene);
     }
 }

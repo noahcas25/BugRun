@@ -5,29 +5,20 @@ using UnityEngine;
 public class TrapSpawnerScript : MonoBehaviour
 {
 
-    public GameObject trap1;
-    public GameObject trap2;
-    public GameObject trap3;
-    public GameObject trap4;
-    public GameObject trap5;
-    public GameObject trap6;
-    // public GameObject trap7;
-    public GameObject startTrap;
-    private GameObject[] traps;
+    [SerializeField]
+    private GameObjectPool pool;
 
-    private bool spawn = true;
-    // private GameObject trapRandom;
+    [SerializeField]
+    private GameObject player;
 
-    private Vector3 start;
     private Vector3 lastPosition;
-
+    private bool spawn = true;
 
     // Start is called before the first frame update
     void Start()
     {
-            traps = new GameObject[] {trap1, trap2, trap3, trap4, trap5, trap6};
-            start = startTrap.transform.position;
-            lastPosition = start;
+            lastPosition.x = (float) -27.5;
+            lastPosition.y = (float) 0.05;
     }
 
     // Update is called once per frame
@@ -41,51 +32,46 @@ public class TrapSpawnerScript : MonoBehaviour
     private void SpawnTrap() {
         StartCoroutine(SpawnTimer());
 
-        int rand = Random.Range(0,6);
-        GameObject trapRandom = Instantiate(traps[rand]);
+        lastPosition.z = player.transform.position.z;
+
+        GameObject trapRandom = pool.Get();
+        trapRandom.SetActive(true);
+
+    // This is how you know its the Saw
+        if(trapRandom.transform.childCount > 3) {
+            lastPosition.x = (float)-26.71;
+            trapRandom.transform.position = lastPosition + transform.forward * (float)91.5;
+            lastPosition.x = (float)-27.5;
+        } else {
+            GameObject trapRandom2 = pool.Get();
+            trapRandom2.SetActive(true);
 
         switch( Random.Range(0,3)) {
             case 0:
-                trapRandom.transform.position = lastPosition + transform.forward * (float)10 + transform.right * (float)-1.25;
-                if(rand != 3 && Random.Range(0,3) > 0) {
-                    GameObject trapRandom2 = Instantiate(traps[rand]);
-                    trapRandom2.transform.position = lastPosition + transform.forward * (float)10;
-                }
+                trapRandom.transform.position = lastPosition + transform.forward * (float)91.5 + transform.right * (float)-1.25;
+                if(Random.Range(0,3) > 0 && trapRandom2.transform.childCount <= 3) 
+                    trapRandom2.transform.position = lastPosition + transform.forward * (float)91.5;
+                else pool.ReturnToPool(trapRandom2);
             break;
 
             case 1:
-                trapRandom.transform.position = lastPosition + transform.forward * (float)10;
+                trapRandom.transform.position = lastPosition + transform.forward * (float)91.5;
+                pool.ReturnToPool(trapRandom2);
             break;
 
             case 2:
-                trapRandom.transform.position = lastPosition + transform.forward * (float)10 + transform.right * (float)1.25;
-                if(rand != 3 && Random.Range(0,2) > 0) {
-                    GameObject trapRandom2 = Instantiate(traps[rand]);
-                    trapRandom2.transform.position = lastPosition + transform.forward * (float)10;
-                }
+                trapRandom.transform.position = lastPosition + transform.forward * (float)91.5 + transform.right * (float)1.25;
+                if(Random.Range(0,3) > 0  && trapRandom2.transform.childCount <= 3)
+                     trapRandom2.transform.position = lastPosition + transform.forward * (float)91.5;
+                else pool.ReturnToPool(trapRandom2);
             break;
-        }
-    
-        lastPosition = trapRandom.transform.position;
-        lastPosition.x = (float)-27.5;
-
-          if(rand == 3) {
-            trapRandom.transform.position = new Vector3((float)-26.75, 0, trapRandom.transform.position.z);
-        }
-        
-        StartCoroutine(DestroyTrap(trapRandom));
+        }}
     }
 
     IEnumerator SpawnTimer() {
 
         spawn = false;
-        yield return new WaitForSeconds((float) 0.5);
+        yield return new WaitForSeconds((float) 11/player.GetComponent<PlayerControllerScript>().GetWalkSpeed());
         spawn = true;
     }
-
-    IEnumerator DestroyTrap(GameObject trapRandom) {
-        yield return new WaitForSeconds((float) 45);
-        // trapRandom.SetActive(false);
-    }
-
 }

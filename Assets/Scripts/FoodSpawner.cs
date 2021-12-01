@@ -13,7 +13,9 @@ public class FoodSpawner : MonoBehaviour
     public GameObject food6;
     public GameObject food7;
     public GameObject startFood;
+    public GameObject coin;
     private GameObject[] foods;
+    // private GameObject[] coins;
 
     private bool spawn = true;
 
@@ -24,6 +26,7 @@ public class FoodSpawner : MonoBehaviour
     void Start()
     {
             foods = new GameObject[] {food1, food2, food3, food4, food5, food6, food7};
+            // coins = new GameObject[] {coinCopper, coinCopper, coinCopper, coinCopper, coinCopper, coinCopper, coinCopper, coinSilver, coinSilver, coinGold};
             start = startFood.transform.position;
             lastPosition = start;
     }
@@ -39,27 +42,32 @@ public class FoodSpawner : MonoBehaviour
     private void SpawnFood() {
         StartCoroutine(SpawnTimer());
 
-        GameObject foodRandom = Instantiate(foods[Random.Range(0,7)]);
-        foodRandom.SetActive(true);
+        // GameObject foodRandom = Instantiate(foods[Random.Range(0,7)]);
+        
+         GameObject newCoin = Instantiate(coin);
+    
+
+        newCoin.SetActive(true);
+        // foodRandom.SetActive(true);
 
         switch( Random.Range(0,3)) {
             case 0:
-                foodRandom.transform.position = lastPosition + transform.forward * (float)10 + transform.right * (float)-1.25;
+                newCoin.transform.position = lastPosition + transform.forward * (float)12 + transform.right * (float)-1.25;
             break;
 
             case 1:
-                foodRandom.transform.position = lastPosition + transform.forward * (float)10;
+                newCoin.transform.position = lastPosition + transform.forward * (float)12;
             break;
 
             case 2:
-                foodRandom.transform.position = lastPosition + transform.forward * (float)10 + transform.right * (float)1.25;
+                newCoin.transform.position = lastPosition + transform.forward * (float)12 + transform.right * (float)1.25;
             break;
         }
         
-        lastPosition = foodRandom.transform.position;
+        lastPosition = newCoin.transform.position;
         lastPosition.x = (float)-27.5;
         
-        StartCoroutine(DestroyFood(foodRandom));
+        // StartCoroutine(DestroyFood(foodRandom));
     }
 
     IEnumerator SpawnTimer() {
@@ -69,9 +77,9 @@ public class FoodSpawner : MonoBehaviour
         spawn = true;
     }
 
-    IEnumerator DestroyFood(GameObject foodRandom) {
-        yield return new WaitForSeconds((float) 45);
-        // foodRandom.SetActive(false);
-    }
+    // IEnumerator DestroyFood(GameObject foodRandom) {
+    //     yield return new WaitForSeconds((float) 45);
+    //     // foodRandom.SetActive(false);
+    // }
 
 }
