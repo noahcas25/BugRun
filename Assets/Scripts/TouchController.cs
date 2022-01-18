@@ -28,8 +28,10 @@ public class TouchController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if(canSwipe)
+        if(canSwipe) {
             Swipe();
+            Keys();
+        }
     }
 
     // Logic for swipe controls
@@ -79,6 +81,22 @@ public class TouchController : MonoBehaviour
             if(Mathf.Abs(distance.x) < tapRange && Mathf.Abs(distance.y) < tapRange) {
                 Debug.Log("Tap");
             }
+        }
+    }
+
+    
+    private void Keys() {
+        if(Input.GetKeyDown("w")) {
+             player.GetComponent<PlayerControllerScript>().Move("Up");
+        }
+        else if(Input.GetKeyDown("a")) {
+             player.GetComponent<PlayerControllerScript>().Move("Left");
+        }
+        else if(Input.GetKeyDown("s")) {
+            player.GetComponent<PlayerControllerScript>().Move("Down");
+        }
+        else if(Input.GetKeyDown("d")) {
+             player.GetComponent<PlayerControllerScript>().Move("Right");
         }
     }
     

@@ -11,6 +11,8 @@ public class PlayerControllerScript : MonoBehaviour
     private GameObjectPool foodPool;
     [SerializeField] 
     private int jumpForce = 5;
+    [SerializeField]
+    private float walkSpeed = 8;
     [SerializeField] 
     private Camera camera;
     [SerializeField] 
@@ -19,7 +21,6 @@ public class PlayerControllerScript : MonoBehaviour
     // Player Data
     private Rigidbody rb;
     private GameObject playerMesh;
-    private int walkSpeed = 8;
     private int lives = 3;
     private bool canWalk = true;
     private bool canJump = true;
@@ -28,7 +29,7 @@ public class PlayerControllerScript : MonoBehaviour
     // Used for Lerping player
     private bool shouldLerp = false;
     private float movePosition;
-    private float endPos;
+    private float endPos = (float) -27.5;
     private float truePosTracker;
     private float xPos;
     private Vector3 pos;
@@ -38,7 +39,6 @@ public class PlayerControllerScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerMesh = GameObject.FindWithTag("CurrentMesh");
         truePosTracker = transform.position.x;
     }
 
@@ -89,6 +89,7 @@ public class PlayerControllerScript : MonoBehaviour
                     endPos = truePosTracker + movePosition;
                     truePosTracker = endPos;
                     shouldLerp = true;
+                     StartCoroutine(MoveTimer(-1));
                 }
             break;
 
@@ -99,6 +100,7 @@ public class PlayerControllerScript : MonoBehaviour
                     endPos = truePosTracker + movePosition;
                     truePosTracker = endPos;
                     shouldLerp = true;
+                     StartCoroutine(MoveTimer(1));
                 }
             break;
 
@@ -130,8 +132,8 @@ public class PlayerControllerScript : MonoBehaviour
             gameController.GetComponent<GameControllerScript>().PlayerDied();
             canGetHit = false;
         }
-        else if (walkSpeed > 8)
-            walkSpeed--;
+        else if (walkSpeed > 8.0)
+            walkSpeed-=(float)0.5;
     }
 
     // Getters and Setters
@@ -139,12 +141,20 @@ public class PlayerControllerScript : MonoBehaviour
         return lives;
     }
 
-    public int GetWalkSpeed() {
+    public float GetWalkSpeed() {
         return walkSpeed;
     }
 
+    public GameObject GetPlayerMesh() {
+        return playerMesh;
+    }
+
+    public void SetPlayerMesh(GameObject mesh) {
+        playerMesh = mesh;
+    }
+
     public void IncreaseWalkSpeed() {
-        walkSpeed++;
+        walkSpeed+=(float)0.5;
     }
 
     public void setCanWalk(bool value) {
@@ -161,10 +171,18 @@ public class PlayerControllerScript : MonoBehaviour
     private IEnumerator HitTimer() {
        canGetHit = false;
        GetComponent<Animator>().enabled = true;
+        // GetComponent<Animator>().CrossFade("PlayerHitanim", 0, 0, 0, 0);
        yield return new WaitForSeconds((float) 2);
        canGetHit = true;
        GetComponent<Animator>().enabled = false;
     }
+
+    private IEnumerator MoveTimer(int value) {
+       playerMesh.transform.Rotate(0, value * 30, 0);
+       yield return new WaitForSeconds((float) 0.1);
+       playerMesh.transform.Rotate(0, -value * 30, 0);
+    }
+    
     
     // Triggers if player collides with something
     private void OnTriggerEnter(Collider other) {

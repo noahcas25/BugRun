@@ -267,7 +267,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: c85bc6286f669a04cab40065f2c92da9, type: 3}
+      m_Icon: {fileID: 2800000, guid: c910f1d8e3751c145bf65837d60a0dd0, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -786,7 +786,11 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    UNet: 1
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
+    UNet: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -799,10 +803,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 457c67a4-dee2-4a01-8c38-a1014888f310
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: BugRun
+  organizationId: tiddybud
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
