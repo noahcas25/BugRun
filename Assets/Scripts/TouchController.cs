@@ -5,49 +5,44 @@ using UnityEngine.UI;
 
 public class TouchController : MonoBehaviour
 {
+// Variables
+    [SerializeField]
+    private GameObject player;
+    [SerializeField]
+    private float swipeRangeX, swipeRangeY, tapRange;
 
-    private Vector2 startPos;
-    private Vector2 currentPos;
-    private Vector2 endPos;
-    private Vector2 distance;
-
-
-    public GameObject player;
-    public float swipeRangeX;
-    public float swipeRangeY;
-    public float tapRange;
-
+    private Vector2 startPos, currentPos, endPos, distance;
     private bool touchStopped = false;
     private bool canSwipe = false;
 
+// Start is called before the first frame update
     void Start() {
         player = GameObject.FindWithTag("Player");
         StartCoroutine(TouchTimer());
     }
 
-    // Update is called once per frame
+// Update is called once per frame
     void Update()
     {   
         if(canSwipe) {
             Swipe();
-            Keys();
+            // Keys();
         }
     }
 
-    // Logic for swipe controls
-
+// Logic for swipe controls
     private void Swipe() {
-
+    //  Start Touch
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
             startPos = Input.GetTouch(0).position;
 
+    //  During Touch
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
             currentPos = Input.GetTouch(0).position;
 
             distance = currentPos - startPos;
 
             if(!touchStopped) {
-
                 if(Mathf.Abs((float)distance.x) > Mathf.Abs((float)distance.y)) {
                     if(distance.x > swipeRangeX) {
                         player.GetComponent<PlayerControllerScript>().Move("Right");
@@ -70,21 +65,17 @@ public class TouchController : MonoBehaviour
                 }
             }
         }
-
+    //  End Touch
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) {
 
             touchStopped = false;
             endPos = Input.GetTouch(0).position;
 
             distance = endPos - startPos;
-
-            if(Mathf.Abs(distance.x) < tapRange && Mathf.Abs(distance.y) < tapRange) {
-                Debug.Log("Tap");
-            }
         }
     }
 
-    
+// Keyboard Support
     private void Keys() {
         if(Input.GetKeyDown("w")) {
              player.GetComponent<PlayerControllerScript>().Move("Up");
@@ -100,6 +91,7 @@ public class TouchController : MonoBehaviour
         }
     }
     
+// Initial Timer
     private IEnumerator TouchTimer() {
         yield return new WaitForSeconds(0.1f);
         canSwipe = true;

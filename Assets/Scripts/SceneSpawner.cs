@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class SceneSpawner : MonoBehaviour
 {
-
+// Variables
      [SerializeField]
     private GameObjectPool poolScenery;
-    
     [SerializeField]
     private GameObject floorPane;
 
     private Vector3 floorPosition;
-    private GameObject scenery;
     private Vector3 lastScenePosition;
+    private GameObject scenery;
     private static int count = 0;
 
-
+// Start is called before the first frame update
     void Start() {
          scenery = transform.GetChild(1).gameObject;
          lastScenePosition = transform.GetChild(0).transform.position;
          floorPosition = floorPane.transform.position;
-
     }
 
+// Spawns scenery from gameObjectPool
     public void SpawnScenery() {
         GameObject nextScenery = poolScenery.Get();
         nextScenery.transform.position = lastScenePosition;
@@ -37,12 +36,10 @@ public class SceneSpawner : MonoBehaviour
             GameObject nextFloorPane = Instantiate(floorPane);
             nextFloorPane.transform.position = floorPosition + transform.forward * (float)2000;
             floorPosition = nextFloorPane.transform.position;
-
-            // StartCoroutine(FloorTimer(floorPane));
-            // nextFloorPane = floorPane;
         }
     }
 
+// Timer for deactivating previous flooring
     IEnumerator FloorTimer(GameObject floor) {
         yield return new WaitForSeconds((float) 20);
         floor.SetActive(false);

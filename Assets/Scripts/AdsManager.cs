@@ -19,7 +19,7 @@ public class AdsManager : IUnityAdsListener
         Advertisement.Initialize(gameId);
     }
 
-    // Plays Interstitial ad; Quick Ad
+// Plays Interstitial ad; Quick Ad
     public void PlayAd() {
        if(Advertisement.IsReady("Interstitial_" + type)) {
            Advertisement.Show("Interstitial_" + type);
@@ -27,7 +27,7 @@ public class AdsManager : IUnityAdsListener
             Debug.Log("Ads not ready");
    }
 
-    // Plays Reward ad; Longer Ad
+// Plays Reward ad; Longer Ad
    public void PlayRewardAd() {
        if(Advertisement.IsReady("Rewarded_" + type)) {
            Advertisement.Show("Rewarded_" + type);
@@ -35,7 +35,7 @@ public class AdsManager : IUnityAdsListener
             Debug.Log("Ads not ready");
    }
 
-    // Necessary Methods for Ads 
+// Necessary Methods for Ads 
     public void OnUnityAdsReady(string placementId) {
         throw new System.NotImplementedException();
     }
