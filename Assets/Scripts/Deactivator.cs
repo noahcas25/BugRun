@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class Deactivator : MonoBehaviour
 {
-    public GameObject player;
-
+// Variables
     [SerializeField]
-    private GameObjectPool trapPool;
+    private GameObjectPool trapPool, coinPool, foodPool, scenePool;
 
-     [SerializeField]
-    private GameObjectPool coinPool;
+    private GameObject player;
 
-    [SerializeField]
-    private GameObjectPool foodPool;
-
-    [SerializeField]
-    private GameObjectPool scenePool;
-
-    // Start is called before the first frame update
+// Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player");
     }
     
+// Triggers that react when deactivator collides with objects
     private void OnTriggerEnter(Collider other) {
         if(!other.CompareTag("Floor") && !other.CompareTag("Scenery")){
             if(other.CompareTag("Trap")) 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameObjectPool : MonoBehaviour
 {
-
+// Variables
     [SerializeField]
     private GameObject prefabs;
     private GameObject[] prefabArr;
@@ -13,7 +13,7 @@ public class GameObjectPool : MonoBehaviour
 
     private Queue<GameObject> pool = new Queue<GameObject>();
 
-
+// Start is called before the first frame update
     private void Start() {
         ObjectToArr();
     }
@@ -22,6 +22,7 @@ public class GameObjectPool : MonoBehaviour
         Instance = this;
     }
 
+// Dequeues GameObject from the pool
     public GameObject Get() {
         if(pool.Count == 0) {
             AddToPool(1);
@@ -30,11 +31,13 @@ public class GameObjectPool : MonoBehaviour
         return pool.Dequeue();
     }
 
+// Enqueues GameObject back into pool
     public void ReturnToPool(GameObject objectReturning) {
         objectReturning.SetActive(false);
         pool.Enqueue(objectReturning);
     }
 
+// Creates new objects to add to the pool, enqueues
     public void AddToPool(int count) {
         for(int i = 0; i < count; i++) {
             GameObject newObject;
@@ -47,6 +50,7 @@ public class GameObjectPool : MonoBehaviour
         }
     }
 
+// Changes prefabs object to an array of prefabs
     private void ObjectToArr() {
         if(prefabs.transform.childCount > 1){
             prefabArr = new GameObject[prefabs.transform.childCount];

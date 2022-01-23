@@ -72,7 +72,7 @@ LightmapSettings:
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
-    m_BakeBackend: 1
+    m_BakeBackend: 2
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 512
@@ -6024,7 +6024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f30d04432edb594791bc2ab3f9dff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1229318963}
   trapPool: {fileID: 1241077997}
   coinPool: {fileID: 1752822808}
   foodPool: {fileID: 52994906}

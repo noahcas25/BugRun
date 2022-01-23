@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlayerControllerScript : MonoBehaviour
 {
-
+// Variables
     [SerializeField] 
-    private GameObjectPool coinPool;
-    [SerializeField] 
-    private GameObjectPool foodPool;
+    private GameObjectPool coinPool, foodPool;
     [SerializeField] 
     private int jumpForce = 5;
     [SerializeField]
@@ -35,14 +33,14 @@ public class PlayerControllerScript : MonoBehaviour
     private Vector3 pos;
     private Vector3 camPos;
 
-    // Start is called before the first frame update
+// Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         truePosTracker = transform.position.x;
     }
 
-    // Update is called once per frame
+// Update is called once per frame
     void Update()
     {
         if(canWalk)
@@ -51,13 +49,13 @@ public class PlayerControllerScript : MonoBehaviour
             LerpPlayer();
     }
 
-    // Moves the player at a constant rate based on the walk speed 
+// Moves the player and camera at a constant rate based on the walk speed 
     private void Walk() {
             transform.position += transform.forward * walkSpeed * Time.deltaTime;
             camera.transform.position = transform.position + transform.forward * (float)(-8) + transform.up * (float)5;
     }
 
-    // Function used to move players position over time
+// Function used to move players position over time
     private void LerpPlayer() {
             xPos = Mathf.Lerp(xPos, endPos, 20f * Time.deltaTime);
             pos = transform.position;
@@ -78,7 +76,7 @@ public class PlayerControllerScript : MonoBehaviour
             };
     }
 
-    // Function used to position the player and camera during gameplay
+// Function used to position the player and camera during gameplay
     public void Move(string direction) {
         switch(direction){
 
@@ -115,7 +113,7 @@ public class PlayerControllerScript : MonoBehaviour
         }
     }
 
-    // Adds a force to the Players RB to jump 
+// Adds a force to the Players RB to jump 
     public void Jump() {
         if(canJump){
             rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
@@ -123,7 +121,7 @@ public class PlayerControllerScript : MonoBehaviour
         }
     }
 
-    // Function for player damage
+// Function for player damage
     private void PlayerHit() {
         lives--;
         gameController.GetComponent<GameControllerScript>().PlayerHit();
@@ -136,7 +134,7 @@ public class PlayerControllerScript : MonoBehaviour
             walkSpeed-=(float)0.5;
     }
 
-    // Getters and Setters
+// Getters and Setters
     public int GetLives() {
         return lives;
     }
@@ -161,7 +159,7 @@ public class PlayerControllerScript : MonoBehaviour
         canWalk = value;
     }
 
-    // Timers
+// Timers for jumping, hitability, and when moving
     private IEnumerator JumpTimer() {
        canJump = false;
        yield return new WaitForSeconds((float) .75);
@@ -171,7 +169,6 @@ public class PlayerControllerScript : MonoBehaviour
     private IEnumerator HitTimer() {
        canGetHit = false;
        GetComponent<Animator>().enabled = true;
-        // GetComponent<Animator>().CrossFade("PlayerHitanim", 0, 0, 0, 0);
        yield return new WaitForSeconds((float) 2);
        canGetHit = true;
        GetComponent<Animator>().enabled = false;
@@ -184,7 +181,7 @@ public class PlayerControllerScript : MonoBehaviour
     }
     
     
-    // Triggers if player collides with something
+// Triggers if player collides with something
     private void OnTriggerEnter(Collider other) {
         if((other.CompareTag("Trap") || other.CompareTag("TrapOverlay")) && canGetHit == true) {
            StartCoroutine(HitTimer());
