@@ -26,7 +26,7 @@ public class TouchController : MonoBehaviour
     {   
         if(canSwipe) {
             Swipe();
-            Keys();
+            // Keys();
         }
     }
 
