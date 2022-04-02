@@ -17,7 +17,7 @@ public class GameControllerScript : MonoBehaviour
 
     // AudioTracks
     [SerializeField]
-    private AudioClip gameOver, coinCollect, playerHit;
+    private AudioClip gameOver, coinCollect, playerHit, speedUp;
     private AudioSource audioSource;
     private float volume = 100;
     private int bugIndex = 0;
@@ -72,6 +72,7 @@ public class GameControllerScript : MonoBehaviour
         if(score%8==0 && player.GetComponent<PlayerControllerScript>().GetWalkSpeed() < 15) {
             player.GetComponent<PlayerControllerScript>().IncreaseWalkSpeed();
             player.GetComponent<PlayerControllerScript>().GetPlayerMesh().GetComponent<Animator>().speed += (float)0.025;
+            audioSource.PlayOneShot(speedUp);
             StartCoroutine(ParticleTimer());
         }
 
