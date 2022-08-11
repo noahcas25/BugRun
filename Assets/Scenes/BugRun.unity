@@ -6656,7 +6656,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000027127, y: -294.4}
+  m_AnchoredPosition: {x: -0.000027127, y: -294.40002}
   m_SizeDelta: {x: -800.0001, y: -1087.1572}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &257773652
@@ -7683,9 +7683,9 @@ GameObject:
   - component: {fileID: 368829725}
   - component: {fileID: 368829724}
   - component: {fileID: 368829723}
-  - component: {fileID: 368829722}
   - component: {fileID: 368829720}
   - component: {fileID: 368829726}
+  - component: {fileID: 368829722}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -7790,7 +7790,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368829719}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: d8432bd19a5fb6441a30d1548548209d, type: 2}
   m_CullingMode: 0
@@ -39362,7 +39362,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34482
+  m_Name: pb_Mesh76694
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -39744,7 +39744,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34326
+  m_Name: pb_Mesh76538
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -45526,8 +45526,8 @@ GameObject:
   - component: {fileID: 1483424706}
   - component: {fileID: 1483424705}
   - component: {fileID: 1483424704}
-  - component: {fileID: 1483424709}
   - component: {fileID: 1483424708}
+  - component: {fileID: 1483424709}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -45643,11 +45643,11 @@ MonoBehaviour:
   _transitionAnim: {fileID: 170762388}
   _volumeSlider: {fileID: 494476297}
   _audioClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: ad3a6a3e80f570341b14f5a3322a5890, type: 3}
+  - {fileID: 8300000, guid: 4dc5b7c70b02f74478b462dc73a2aefe, type: 3}
+  - {fileID: 8300000, guid: 0533f633696216241b1fc77a5ede82bd, type: 3}
+  - {fileID: 8300000, guid: a258b6bfcaa21d5419280613406d3aac, type: 3}
+  - {fileID: 8300000, guid: 8c002339f05c6e64e8dc15b22d0721e2, type: 3}
 --- !u!82 &1483424709
 AudioSource:
   m_ObjectHideFlags: 0
