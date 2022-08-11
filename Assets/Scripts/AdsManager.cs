@@ -3,56 +3,88 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
-public class AdsManager : IUnityAdsListener
+public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
 {
 
-// Changes the gameId and type string if IOS or Android
-    #if UNITY_IOS
-        string gameId = "4554459";
-        string type = "iOS";
-    #else   
-        string gameId = "4554458";
-        string type = "Android";
-    #endif
+    [SerializeField] private string _iOSGameId = "4554459";
+    [SerializeField] private string _iOSAdUnitId = "iOS";
+    [SerializeField] private string _androidGameId = "4554458";
+    [SerializeField] private string _androidAdUnitId = "Android";
+    [SerializeField] bool _testMode = true;
+    private string _gameId;
+    private string _adUnitId;
 
     public static AdsManager Instance {get; private set;}
 
-    public void LoadAd(string adType) {
-
+    private void Awake() { 
+        Instance = this;
+        InitializeAds();
     }
 
-// Plays Interstitial ad; Quick Ad
+    public void InitializeAds() {
+        _gameId = (Application.platform == RuntimePlatform.IPhonePlayer)
+            ? _iOSGameId
+            : _androidGameId;
+
+        Advertisement.Initialize(_gameId, _testMode, this);
+    }
+ 
+    public void OnInitializationComplete() {
+        // Debug.Log("Unity Ads initialization complete.");
+    }
+ 
+    public void OnInitializationFailed(UnityAdsInitializationError error, string message) {
+        Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
+    }
+
+    private void OnEnable() {
+        _adUnitId = (Application.platform == RuntimePlatform.IPhonePlayer)
+            ? _iOSAdUnitId
+            : _androidAdUnitId;
+    }
+
     public void PlayAd() {
-       if(Advertisement.IsReady("Interstitial_" + type)) {
-           Advertisement.Show("Interstitial_" + type);
-       } else 
-            Debug.Log("Ads not ready");
-   }
-
-// Plays Reward ad; Longer Ad
-   public void PlayRewardAd() {
-       if(Advertisement.IsReady("Rewarded_" + type)) {
-           Advertisement.Show("Rewarded_" + type);
-       } else 
-            Debug.Log("Ads not ready");
-   }
-
-// Necessary Methods for Ads 
-    public void OnUnityAdsReady(string placementId) {
-        throw new System.NotImplementedException();
+            ShowAd("Interstitial_" + _adUnitId);
     }
 
-    public void OnUnityAdsDidError(string message) {
-        Debug.Log("ERROR: " + message);
+    public void PlayRewardAd() {
+            ShowAd("Rewarded_" + _adUnitId);
     }
 
-    public void OnUnityAdsDidStart(string placementId) {
-        Debug.Log("VIDEO STARTED");
+        // Load content to the Ad Unit:
+    public void LoadAd(string adType) {
+        Advertisement.Load(adType + _adUnitId, this);
     }
-
-    public void OnUnityAdsDidFinish(string placementId, ShowResult showResult) {
-        if(placementId == "Reward" && showResult == ShowResult.Finished) {
-            Debug.Log("PLAYER REWARDED");
+ 
+    // If the ad successfully loads, add a listener to the button and enable it:
+    public void OnUnityAdsAdLoaded(string adUnitId) {
+        Debug.Log("Ad Loaded: " + adUnitId);
+    }
+ 
+    // Implement a method to execute when the user clicks the button:
+    public void ShowAd(string adUnitId) {
+        Advertisement.Show(adUnitId, this);
+    }
+ 
+    // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
+    public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState) {
+        if(showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED) && adUnitId.Equals("Rewarded_" + _adUnitId)) {
+        // Grant a reward.
+            ShopController.Instance.GiveReward();
         }
     }
+ 
+    // Implement Load and Show Listener error callbacks:
+    public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message) {
+        Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
+        // Use the error details to determine whether to try to load another ad.
+    }
+ 
+    public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message){
+        Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
+        // Use the error details to determine whether to try to load another ad.
+    }
+ 
+    public void OnUnityAdsShowStart(string adUnitId) { }
+    public void OnUnityAdsShowClick(string adUnitId) { }
 }

@@ -4,59 +4,49 @@ using UnityEngine;
 
 public class GameObjectPool : MonoBehaviour
 {
-// Variables
-    [SerializeField]
-    private GameObject prefabs;
-    private GameObject[] prefabArr;
+    [SerializeField] private GameObject _prefabs;
+    private GameObject[] _prefabArr;
 
-    public static GameObjectPool Instance { get; private set;}
+    private Queue<GameObject> _pool = new Queue<GameObject>();
 
-    private Queue<GameObject> pool = new Queue<GameObject>();
-
-// Start is called before the first frame update
     private void Start() {
         ObjectToArr();
     }
-
-    private void Awake() {
-        Instance = this;
-    }
-
-// Dequeues GameObject from the pool
+    
+// Dequeues GameObject from the _pool
     public GameObject Get() {
-        if(pool.Count == 0) {
+        if(_pool.Count == 0)
             AddToPool(1);
-        }
         
-        return pool.Dequeue();
+        return _pool.Dequeue();
     }
 
-// Enqueues GameObject back into pool
+// Enqueues GameObject back into _pool
     public void ReturnToPool(GameObject objectReturning) {
         objectReturning.SetActive(false);
-        pool.Enqueue(objectReturning);
+        _pool.Enqueue(objectReturning);
     }
 
-// Creates new objects to add to the pool, enqueues
+// Creates new objects to add to the _pool, enqueues
     public void AddToPool(int count) {
         for(int i = 0; i < count; i++) {
             GameObject newObject;
-            if(prefabs.transform.childCount > 1) {
-                newObject = Instantiate(prefabArr[Random.Range(0, prefabs.transform.childCount)]);
-            } else newObject = Instantiate(prefabs);
+            if(_prefabs.transform.childCount > 1) {
+                newObject = Instantiate(_prefabArr[Random.Range(0, _prefabs.transform.childCount)]);
+            } else newObject = Instantiate(_prefabs);
             
             newObject.SetActive(true);
-            pool.Enqueue(newObject);
+            _pool.Enqueue(newObject);
         }
     }
 
-// Changes prefabs object to an array of prefabs
+// Changes prefabs object to an array of _prefabs
     private void ObjectToArr() {
-        if(prefabs.transform.childCount > 1){
-            prefabArr = new GameObject[prefabs.transform.childCount];
+        if(_prefabs.transform.childCount > 1){
+            _prefabArr = new GameObject[_prefabs.transform.childCount];
 
-            for(int i = 0; i < prefabs.transform.childCount; i++) {
-                prefabArr[i] = prefabs.transform.GetChild(i).gameObject;
+            for(int i = 0; i < _prefabs.transform.childCount; i++) {
+                _prefabArr[i] = _prefabs.transform.GetChild(i).gameObject;
             }
         }  
     }

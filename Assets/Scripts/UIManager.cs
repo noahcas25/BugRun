@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Text _scoreText, _livesText, _restartCanvasScoreText, _restartCanvasHSText, _restartCanvasWalletText;
-    [SerializeField] private GameObject _uiCanvas, _gameOverCanvas, _optionsCanvas;
+    [SerializeField] private GameObject _gameUICanvas, _gameOverCanvas, _optionsCanvas;
     [SerializeField] private Animator _transitionAnim;
     [SerializeField] private Slider _volumeSlider;
     [SerializeField] private AudioClip[] _audioClips;
@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     }
 
     private IEnumerator DieTimer(){
-        _uiCanvas.SetActive(false);
+        _gameUICanvas.SetActive(false);
         yield return new WaitForSeconds((float)2.25);
         _gameOverCanvas.SetActive(true);
         Time.timeScale = 0f;
@@ -68,13 +68,13 @@ public class UIManager : MonoBehaviour
 
     public void Pause() {
         Time.timeScale = 0f;
-        _uiCanvas.SetActive(false);
+        _gameUICanvas.SetActive(false);
         _optionsCanvas.SetActive(true);
     }
 
     public void Resume() {
         Time.timeScale = 1f;
-        _uiCanvas.SetActive(true);
+        _gameUICanvas.SetActive(true);
         _optionsCanvas.SetActive(false);
     }
 

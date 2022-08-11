@@ -5049,7 +5049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d541d0e671f7cbb4cb0c375a4130ca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: {fileID: 0}
+  _prefabs: {fileID: 1870427514}
 --- !u!4 &52994907
 Transform:
   m_ObjectHideFlags: 0
@@ -5229,10 +5229,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 95801180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 1
+  _isFood: 1
 --- !u!65 &95701504
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5844,18 +5844,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170762387}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5555556, y: 0.5555556, z: 0.5555556}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1483424707}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -6.487793, y: -19.51587}
+  m_SizeDelta: {x: 846.7051, y: 1485.5591}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &177178274
 GameObject:
   m_ObjectHideFlags: 0
@@ -5887,10 +5887,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f30d04432edb594791bc2ab3f9dff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trapPool: {fileID: 0}
-  coinPool: {fileID: 0}
-  foodPool: {fileID: 0}
-  scenePool: {fileID: 0}
+  _trapPool: {fileID: 1241077997}
+  _coinPool: {fileID: 1752822808}
+  _foodPool: {fileID: 52994906}
+  _scenePool: {fileID: 1684125483}
 --- !u!54 &177178276
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6541,7 +6541,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &246744199
 GameObject:
@@ -6709,10 +6709,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdee821d98fbea48b09782f600bb73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  swipeRangeX: 0
-  swipeRangeY: 0
-  tapRange: 0
+  _player: {fileID: 1229318971}
+  _swipeRangeX: 10
+  _swipeRangeY: 10
 --- !u!114 &257773655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7629,7 +7628,7 @@ Transform:
   - {fileID: 1870427515}
   - {fileID: 4244702513049879}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &336240219
 MonoBehaviour:
@@ -7640,11 +7639,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 336240217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe32e33e75b299d40a26b4007b62a7ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e9a87ad8c5b34042997c903a2b5066e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pool: {fileID: 1241077997}
-  player: {fileID: 1229318963}
+  _trapPool: {fileID: 1241077997}
+  _player: {fileID: 1229318971}
 --- !u!114 &336240221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7654,12 +7653,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 336240217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10579f48dbe03e1489acd89c139a179a, type: 3}
+  m_Script: {fileID: 11500000, guid: 48b3f8261a4796c46a68ab3e25a1c208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolCoins: {fileID: 1752822808}
-  poolFood: {fileID: 52994906}
-  player: {fileID: 1229318963}
+  _poolCoins: {fileID: 1752822808}
+  _poolFood: {fileID: 52994906}
+  _player: {fileID: 1229318971}
 --- !u!65 &364423970
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7776,13 +7775,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368829719}
-  m_LocalRotation: {x: 0.15729629, y: 0, z: 0, w: 0.98755145}
-  m_LocalPosition: {x: -27.5, y: 5.09, z: -349.5}
+  m_LocalRotation: {x: 0.19342108, y: 0, z: 0, w: 0.9811159}
+  m_LocalPosition: {x: -27.5, y: 6.15, z: -349.5}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 18.1, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.305, y: 0, z: 0}
 --- !u!95 &368829726
 Animator:
   serializedVersion: 3
@@ -8227,10 +8226,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 415935724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 1
+  _isFood: 1
 --- !u!65 &415967824
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13206,8 +13205,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1483424708}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 1
         m_Arguments:
@@ -13372,8 +13371,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameControllerScript, Assembly-CSharp
+      - m_Target: {fileID: 1483424708}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: UpdateVolume
         m_Mode: 1
         m_Arguments:
@@ -19758,10 +19757,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 800439907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 1
+  _isFood: 1
 --- !u!65 &800340167
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21771,7 +21770,7 @@ GameObject:
   - component: {fileID: 956174676}
   - component: {fileID: 956174675}
   m_Layer: 5
-  m_Name: LTScoreText
+  m_Name: HighScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22000,8 +21999,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1483424708}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
@@ -27569,10 +27568,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1498402550885333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 0
+  _isFood: 0
 --- !u!65 &1000055168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38869,8 +38868,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1483424708}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
@@ -38962,10 +38961,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1137993957}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 1
+  _isFood: 1
 --- !u!65 &1138093641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39143,7 +39142,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1229318966}
   - component: {fileID: 1229318965}
-  - component: {fileID: 1229318968}
   - component: {fileID: 1229318964}
   - component: {fileID: 1229318969}
   - component: {fileID: 1229318970}
@@ -39209,7 +39207,7 @@ Transform:
   - {fileID: 1938424427}
   - {fileID: 177178278}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1229318967
 Animator:
@@ -39230,24 +39228,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1229318968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1229318963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3480872212aac27478337d2246a6b653, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinPool: {fileID: 1752822808}
-  foodPool: {fileID: 52994906}
-  jumpForce: 8
-  walkSpeed: 8
-  camera: {fileID: 368829724}
-  gameController: {fileID: 1483424706}
 --- !u!65 &1229318969
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39361,7 +39341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d541d0e671f7cbb4cb0c375a4130ca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: {fileID: 0}
+  _prefabs: {fileID: 1104628842}
 --- !u!4 &1241077998
 Transform:
   m_ObjectHideFlags: 0
@@ -39382,7 +39362,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23256
+  m_Name: pb_Mesh34482
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -39764,7 +39744,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23098
+  m_Name: pb_Mesh34326
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -40941,7 +40921,7 @@ Transform:
   - {fileID: 1752822809}
   - {fileID: 1684125484}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1452344738
 BoxCollider:
@@ -45631,6 +45611,7 @@ RectTransform:
   - {fileID: 723646091}
   - {fileID: 165792671}
   - {fileID: 624416096}
+  - {fileID: 170762394}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45651,17 +45632,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75a7df22c7d55e4aae718e6b16564f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 0}
-  _livesText: {fileID: 0}
-  _restartCanvasScoreText: {fileID: 0}
-  _restartCanvasHSText: {fileID: 0}
-  _restartCanvasWalletText: {fileID: 0}
-  _uiCanvas: {fileID: 0}
-  _gameOverCanvas: {fileID: 0}
-  _optionsCanvas: {fileID: 0}
-  _transitionAnim: {fileID: 0}
-  _volumeSlider: {fileID: 0}
-  _audioClips: []
+  _scoreText: {fileID: 1404813187}
+  _livesText: {fileID: 2034625071}
+  _restartCanvasScoreText: {fileID: 1045159898}
+  _restartCanvasHSText: {fileID: 1828073927}
+  _restartCanvasWalletText: {fileID: 1033727207}
+  _gameUICanvas: {fileID: 723646090}
+  _gameOverCanvas: {fileID: 165792670}
+  _optionsCanvas: {fileID: 624416095}
+  _transitionAnim: {fileID: 170762388}
+  _volumeSlider: {fileID: 494476297}
+  _audioClips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!82 &1483424709
 AudioSource:
   m_ObjectHideFlags: 0
@@ -45857,10 +45843,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1565094088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 1
+  _isFood: 1
 --- !u!65 &1565062764
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46102,8 +46088,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1483424708}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
@@ -46181,8 +46167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89587cea39d4e2b44b4ab4f8fd4ff1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolScenery: {fileID: 0}
-  floorPane: {fileID: 0}
+  _poolScenery: {fileID: 1684125483}
+  _floorPane: {fileID: 1460834526}
 --- !u!4 &1629055818
 Transform:
   m_ObjectHideFlags: 0
@@ -46332,10 +46318,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1676222606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 1
+  _isFood: 1
 --- !u!65 &1676191282
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46412,7 +46398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d541d0e671f7cbb4cb0c375a4130ca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: {fileID: 0}
+  _prefabs: {fileID: 1629055816}
 --- !u!4 &1684125484
 Transform:
   m_ObjectHideFlags: 0
@@ -46990,7 +46976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d541d0e671f7cbb4cb0c375a4130ca2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: {fileID: 0}
+  _prefabs: {fileID: 1498402550885333}
 --- !u!4 &1752822809
 Transform:
   m_ObjectHideFlags: 0
@@ -47813,7 +47799,7 @@ GameObject:
   - component: {fileID: 1828073928}
   - component: {fileID: 1828073927}
   m_Layer: 5
-  m_Name: LTScoreText#
+  m_Name: HighScoreText#
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48709,8 +48695,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1483424708}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
@@ -54316,10 +54302,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1988797372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7959dcdbe88fb41b1cf070811c9d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 65fa68846fba8824995dd6e95482ad06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFood: 1
+  _isFood: 1
 --- !u!65 &1988830496
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54505,8 +54491,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1483424708}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
@@ -55446,7 +55432,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1013175199131724
 GameObject:
