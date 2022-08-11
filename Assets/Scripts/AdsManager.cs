@@ -15,8 +15,10 @@ public class AdsManager : IUnityAdsListener
         string type = "Android";
     #endif
 
-    public AdsManager() {
-        Advertisement.Initialize(gameId);
+    public static AdsManager Instance {get; private set;}
+
+    public void LoadAd(string adType) {
+
     }
 
 // Plays Interstitial ad; Quick Ad
