@@ -60,8 +60,8 @@ public class UIManager : MonoBehaviour
     }
 
     private IEnumerator DieTimer(){
-        _gameUICanvas.SetActive(false);
         yield return new WaitForSeconds((float)2.25);
+        _gameUICanvas.SetActive(false);
         _gameOverCanvas.SetActive(true);
         Time.timeScale = 0f;
     }

@@ -53,7 +53,7 @@ public class BugPlayer : MonoBehaviour
         if(!_canWalk) return;
 
         transform.position += transform.forward * _walkSpeed * Time.deltaTime;
-        _camera.transform.position = transform.position + transform.forward * (float)(-8) + transform.up * (float)6;
+        _camera.transform.position = transform.position + transform.forward * (float)(-6.5) + transform.up * (float)5;
     }
 
 // Function used to move players position over time
@@ -157,11 +157,11 @@ public class BugPlayer : MonoBehaviour
     }
 
     private void PlayerDied() {
+        GameManager.Instance.GameOver();
+
         _canWalk = false;
         _playerMesh.GetComponent<Animator>().speed = 1;
         GetComponent<Animator>().Play("GameOver");
-         
-        GameManager.Instance.GameOver();
     }
 
     public float GetWalkSpeed() => _walkSpeed;
@@ -180,7 +180,7 @@ public class BugPlayer : MonoBehaviour
     }
     
     private void OnTriggerEnter(Collider other) {
-        if((other.CompareTag("Trap") || other.CompareTag("TrapOverlay")) && _canGetHit == true)
+        if((other.CompareTag("Trap") || other.CompareTag("TrapOverlay")) && _canGetHit)
             PlayerHit();
         else if(other.CompareTag("Coin")) {
             _coinPool.ReturnToPool(other.gameObject);

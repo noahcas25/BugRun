@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private int _score, _highScore, _wallet = 0;
 
     [System.NonSerialized] public UnityEvent<int> _scoreChangedEvent;
+    [System.NonSerialized] public UnityEvent<bool> _gameOverEvent;
 
     public static GameManager Instance {get; private set;}
 
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
 
         if(_scoreChangedEvent == null)
             _scoreChangedEvent = new UnityEvent<int>();
+            
+         if(_gameOverEvent == null)
+            _gameOverEvent = new UnityEvent<bool>();
     }
 
     private void OnDisable() {
@@ -54,6 +58,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver() {
+        _gameOverEvent.Invoke(true);
+
         if(_score > _highScore)
             _highScore = _score;
 
